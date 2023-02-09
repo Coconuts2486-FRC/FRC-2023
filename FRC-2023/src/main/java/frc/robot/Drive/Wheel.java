@@ -9,6 +9,7 @@ import com.ctre.phoenix.sensors.CANCoder;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Map;
 
 public class Wheel {
     
@@ -90,7 +91,7 @@ public class Wheel {
         calculated = 1;
 
         //calculate the x and y speeds of the wheel
-        odometry();
+        odometry(Map.initialAngle - Map.gyro.getYaw());
     }
 
     //make sure the motors stop moving
@@ -106,21 +107,22 @@ public class Wheel {
         }
 
         //take speed so odometry doesn't act stupid
+        this.currentAngle = this.angleSensor.getAbsolutePosition() - this.offset;
         this.currentSpeed = this.driveMotor.getSelectedSensorVelocity();
-        odometry();
+        odometry(Map.initialAngle - Map.gyro.getYaw());
 
     }
 
     //calculates x and y speeds of the wheel in ticks/100ms
-    public void odometry()
+    public void odometry(double robotAngle)
     {
         //split the motor speed into the x and y velocities of the wheel using trig
         if (this.id.equals("FR") || this.id.equals("FL")) {
-            this.changeInXY[0] = Math.cos(toRadians(this.currentAngle)) * -this.currentSpeed;
-            this.changeInXY[1] = Math.sin(toRadians(this.currentAngle)) * -this.currentSpeed;
+            this.changeInXY[0] = Math.cos(toRadians(this.currentAngle + 180 - robotAngle)) * this.currentSpeed;
+            this.changeInXY[1] = Math.sin(toRadians(this.currentAngle + 180 - robotAngle)) * this.currentSpeed;
         } else {
-            this.changeInXY[0] = Math.cos(toRadians(this.currentAngle)) * this.currentSpeed;
-            this.changeInXY[1] = Math.sin(toRadians(this.currentAngle)) * this.currentSpeed;
+            this.changeInXY[0] = Math.cos(toRadians(this.currentAngle - robotAngle)) * this.currentSpeed;
+            this.changeInXY[1] = Math.sin(toRadians(this.currentAngle - robotAngle)) * this.currentSpeed;
         }
  
     }
@@ -163,7 +165,7 @@ public class Wheel {
     }
 
     //Adds two vectors {magnitude, angle}
-    public double[] addVectors(double[] arr1, double[] arr2)
+    public static double[] addVectors(double[] arr1, double[] arr2)
     {
         double magnitudeOne = arr1[0];
         double angleOne = arr1[1];
@@ -185,13 +187,13 @@ public class Wheel {
     }
 
     //converts degrees to radians
-    public double toRadians(double angle)
+    public static double toRadians(double angle)
     {
         return (angle * Math.PI) / 180;
     }
 
     //converts radians to degrees
-    public double toDegrees(double angle)
+    public static double toDegrees(double angle)
     {
         return (angle * 180) / Math.PI;
     }

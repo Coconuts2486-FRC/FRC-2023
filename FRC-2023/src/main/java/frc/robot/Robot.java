@@ -5,6 +5,9 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Auto.DriveTo;
+import frc.robot.Drive.Wheel;
 import frc.robot.Intake.Rollers;
 
 /**
@@ -24,6 +27,8 @@ public class Robot extends TimedRobot {
   double twist;
   double joystickAngle;
   double joystickMag;
+
+  double[] balance_drive = {0, 0};
 
   @Override
   public void robotInit() {
@@ -48,16 +53,33 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
-    x = Map.driver.getRawAxis(0) / 4;
-    y = Map.driver.getRawAxis(1) / 4;
+    x = Map.driver.getRawAxis(0) / 3;
+    y = Map.driver.getRawAxis(1) / 3;
     twist = Map.driver.getRawAxis(4) / 4;
     joystickAngle = 180 + (Math.atan2(y, -x) / (Math.PI) * 180);
     joystickMag = Math.sqrt(x * x + y * y);
 
-    Map.swerve.swerveDrive(joystickAngle, joystickMag, twist);
-    Map.swerve.odometry();
-    Rollers.roll(Map.driver.getRawAxis(2), Map.driver.getRawAxis(3));
+    if (Map.driver.getPOV() != -1) {
+      DriveTo.goToCoords(0, 0);
+    } else if (!Map.driver.getRawButton(5)) {
+      Map.swerve.swerveDrive(joystickAngle, joystickMag, twist);
+      Map.swerve.odometry();
+    } else {
+      double[] pitch = {Map.gyro.getPitch() / 45, 180};
+      if (pitch[0] < 0) {
+        pitch[0] = -pitch[0];
+        pitch[1] = 0;
+      }
+      double[] roll = {Map.gyro.getRoll() / 45, 270};
+      if (roll[0] < 0) {
+        roll[0] = -roll[0];
+        roll[1] = 90;
+      }
+      balance_drive = Wheel.addVectors(pitch, roll);
 
+      SmartDashboard.putNumber("balance angle", balance_drive[0]);
+      Map.swerve.swerveDrive(balance_drive[1] - Map.initialAngle - Map.gyro.getYaw(), Math.sqrt(balance_drive[0] / 8), 0);
+    }
     if (Map.driver.getRawButton(6)) {
       Map.initialAngle = Map.gyro.getYaw();
     }
@@ -65,6 +87,9 @@ public class Robot extends TimedRobot {
       Map.swerve.xPos = 0;
       Map.swerve.yPos = 0;
     }
+
+    Rollers.roll(Map.driver.getRawAxis(2), Map.driver.getRawAxis(3));
+
 
   }
 
