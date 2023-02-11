@@ -32,7 +32,7 @@ public class Swerve {
 
     public void swerveDrive(double angle, double speed, double twist)
     {
-        angle = angle + Map.initialAngle - Map.gyro.getYaw();
+        SmartDashboard.putNumber("angle", angle);
         if (speed > Map.deadband || Math.abs(twist) > Map.deadband) {
             if (speed > Map.deadband) {
                 speed = speed - Map.deadband;

@@ -25,7 +25,7 @@ public class DriveTo {
             speedAuto = 0.3;
         }
 
-        Map.swerve.swerveDrive(angleAuto, speedAuto, 0);
+        Map.swerve.swerveDrive(angleAuto + Map.initialAngle - Map.gyro.getYaw(), speedAuto, 0);
         Map.swerve.odometry(Map.initialAngle - Map.gyro.getYaw());
 
         SmartDashboard.putNumber("angle auto", angleAuto);

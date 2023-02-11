@@ -27,6 +27,7 @@ public class Robot extends TimedRobot {
   double twist;
   double joystickAngle;
   double joystickMag;
+  double fieldCenOffset;
 
   double[] balance_drive = {0, 0};
 
@@ -58,6 +59,7 @@ public class Robot extends TimedRobot {
     twist = Map.driver.getRawAxis(4) / 4;
     joystickAngle = 180 + (Math.atan2(y, -x) / (Math.PI) * 180);
     joystickMag = Math.sqrt(x * x + y * y);
+    fieldCenOffset = Map.initialAngle - Map.gyro.getYaw();
 
     if (Map.driver.getPOV() != -1) {
       DriveTo.goToCoords(0, 0);
@@ -66,8 +68,8 @@ public class Robot extends TimedRobot {
     } else if (Map.driver.getRawButton(5)) {
       Balance.balanceRobot();
     } else {
-      Map.swerve.swerveDrive(joystickAngle, joystickMag, twist);
-      Map.swerve.odometry(Map.initialAngle - Map.gyro.getYaw());
+      Map.swerve.swerveDrive(joystickAngle + fieldCenOffset, joystickMag, twist);
+      Map.swerve.odometry(fieldCenOffset);
     }
 
     if (Map.driver.getRawButton(6)) {
