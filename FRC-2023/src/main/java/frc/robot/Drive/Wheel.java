@@ -118,11 +118,11 @@ public class Wheel {
     {
         //split the motor speed into the x and y velocities of the wheel using trig
         if (this.id.equals("FR") || this.id.equals("FL")) {
-            this.changeInXY[0] = Math.cos(toRadians(this.currentAngle + 180 - robotAngle)) * this.currentSpeed;
-            this.changeInXY[1] = Math.sin(toRadians(this.currentAngle + 180 - robotAngle)) * this.currentSpeed;
+            this.changeInXY[0] = Math.cos(toRadians(this.currentAngle - robotAngle)) * -this.currentSpeed;
+            this.changeInXY[1] = Math.sin(toRadians(this.currentAngle - robotAngle)) * -this.currentSpeed;
         } else {
-            this.changeInXY[0] = Math.cos(toRadians(this.currentAngle - robotAngle)) * this.currentSpeed;
-            this.changeInXY[1] = Math.sin(toRadians(this.currentAngle - robotAngle)) * this.currentSpeed;
+            this.changeInXY[0] = Math.cos(toRadians(this.currentAngle - robotAngle)) * -this.currentSpeed;
+            this.changeInXY[1] = Math.sin(toRadians(this.currentAngle - robotAngle)) * -this.currentSpeed;
         }
  
     }

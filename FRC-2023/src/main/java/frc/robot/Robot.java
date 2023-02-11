@@ -5,9 +5,9 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Auto.Balance;
 import frc.robot.Auto.DriveTo;
-import frc.robot.Drive.Wheel;
+import frc.robot.Auto.ShortTestPaths;
 import frc.robot.Intake.Rollers;
 
 /**
@@ -61,35 +61,25 @@ public class Robot extends TimedRobot {
 
     if (Map.driver.getPOV() != -1) {
       DriveTo.goToCoords(0, 0);
-    } else if (!Map.driver.getRawButton(5)) {
-      Map.swerve.swerveDrive(joystickAngle, joystickMag, twist);
-      Map.swerve.odometry();
+    } else if (Map.driver.getRawButton(1)) {
+      ShortTestPaths.driveThenBalance();
+    } else if (Map.driver.getRawButton(5)) {
+      Balance.balanceRobot();
     } else {
-      double[] pitch = {Map.gyro.getPitch() / 45, 180};
-      if (pitch[0] < 0) {
-        pitch[0] = -pitch[0];
-        pitch[1] = 0;
-      }
-      double[] roll = {Map.gyro.getRoll() / 45, 270};
-      if (roll[0] < 0) {
-        roll[0] = -roll[0];
-        roll[1] = 90;
-      }
-      balance_drive = Wheel.addVectors(pitch, roll);
-
-      SmartDashboard.putNumber("balance angle", balance_drive[0]);
-      Map.swerve.swerveDrive(balance_drive[1] - Map.initialAngle - Map.gyro.getYaw(), Math.sqrt(balance_drive[0] / 8), 0);
+      Map.swerve.swerveDrive(joystickAngle, joystickMag, twist);
+      Map.swerve.odometry(Map.initialAngle - Map.gyro.getYaw());
     }
+
     if (Map.driver.getRawButton(6)) {
       Map.initialAngle = Map.gyro.getYaw();
     }
     if (Map.driver.getRawButton(3)) {
       Map.swerve.xPos = 0;
       Map.swerve.yPos = 0;
+      ShortTestPaths.onBoard = false;
     }
-
+    
     Rollers.roll(Map.driver.getRawAxis(2), Map.driver.getRawAxis(3));
-
 
   }
 
