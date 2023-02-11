@@ -7,7 +7,7 @@ import frc.robot.Drive.Wheel;
 
 public class DriveTo {
 
-    public static PIDController distAutoPID = new PIDController(0.027, 0.0001, 0.0);;
+    public static PIDController distAutoPID = new PIDController(0.02, 0.0001, 0.0);;
     public static double speedAuto;
     public static double angleAuto;
     public static double distAuto;

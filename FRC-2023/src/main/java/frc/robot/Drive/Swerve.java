@@ -77,7 +77,7 @@ public class Swerve {
         this.yPos += sumY * cycleTime;
 
         this.coords[0] = (Math.sin(Wheel.toRadians(robotAngle + 90)) + Math.cos(Wheel.toRadians(robotAngle + 90)) - 1) * 500;
-        this.coords[1] = (Math.sin(Wheel.toRadians(robotAngle)) + Math.cos(Wheel.toRadians(robotAngle)) - 1) * 500;
+        this.coords[1] = (Math.sin(Wheel.toRadians(robotAngle)) + Math.cos(Wheel.toRadians(robotAngle)) - 1) * 525;
 
         SmartDashboard.putNumber("x pos", this.xPos + coords[0]);
         SmartDashboard.putNumber("y pos", this.yPos - coords[1]);
