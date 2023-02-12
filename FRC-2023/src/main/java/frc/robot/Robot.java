@@ -63,7 +63,7 @@ public class Robot extends TimedRobot {
     fieldCenOffset = Map.initialAngle - Map.gyro.getYaw();
 
     if (Map.driver.getPOV() != -1) {
-      DriveTo.goToCoords(0, 0, 1);
+      DriveTo.goToCoordsPID(0, 0);
     } else if (Map.driver.getRawButton(1)) {
       DriveRoute.drive();
     } else if (Map.driver.getRawButton(5)) {

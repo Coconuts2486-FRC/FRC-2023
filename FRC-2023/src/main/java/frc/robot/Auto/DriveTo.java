@@ -14,7 +14,7 @@ public class DriveTo {
     public static double distanceY;
     public static double distanceX;
     
-    public static boolean goToCoordsPID(double x, double y, double speed)
+    public static boolean goToCoordsPID(double x, double y)
     {
         distanceX = x - (Map.swerve.xPos + Map.swerve.coords[0]);
         distanceY = y - (Map.swerve.yPos - Map.swerve.coords[1]);
@@ -25,13 +25,13 @@ public class DriveTo {
             speedAuto = 0.3;
         }
 
-        Map.swerve.swerveDrive(angleAuto + Map.initialAngle - Map.gyro.getYaw(), speedAuto * speed, 0);
+        Map.swerve.swerveDrive(angleAuto + Map.initialAngle - Map.gyro.getYaw(), speedAuto, 0);
         Map.swerve.odometry(Map.initialAngle - Map.gyro.getYaw());
 
         SmartDashboard.putNumber("angle auto", angleAuto);
-        SmartDashboard.putNumber("speed auto", speedAuto * speed);
+        SmartDashboard.putNumber("speed auto", speedAuto);
         SmartDashboard.putNumber("dist auto", distAuto);
-        SmartDashboard.putBoolean("Auto", true);
+
 
         if (distAuto < 100) {
             return true;
@@ -39,7 +39,27 @@ public class DriveTo {
         return false;
     }
 
-    // public static boolean goToCoords
+    public static boolean goToCoords(double x, double y, double speed) {
+        distanceX = x - (Map.swerve.xPos + Map.swerve.coords[0]);
+        distanceY = y - (Map.swerve.yPos - Map.swerve.coords[1]);
+        angleAuto = Wheel.toDegrees(Math.atan2(distanceY, distanceX));
+        distAuto = Math.sqrt(distanceY * distanceY + distanceX * distanceX) / 400;
+        if (distAuto > 0.3) {
+            distAuto = 0.3;
+        }
+
+        Map.swerve.swerveDrive(angleAuto + Map.initialAngle - Map.gyro.getYaw(), distAuto, 0);
+        Map.swerve.odometry(Map.initialAngle - Map.gyro.getYaw());
+
+        SmartDashboard.putNumber("angle auto", angleAuto);
+        SmartDashboard.putNumber("dist auto", distAuto);
+
+        if (distAuto < 100) {
+            return true;
+        }
+        return false;
+        
+    }
 
     
 }
