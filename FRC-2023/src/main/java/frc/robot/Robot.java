@@ -6,6 +6,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import frc.robot.Auto.Balance;
+import frc.robot.Auto.DriveRoute;
 import frc.robot.Auto.DriveTo;
 import frc.robot.Auto.ShortTestPaths;
 import frc.robot.Intake.Rollers;
@@ -62,9 +63,9 @@ public class Robot extends TimedRobot {
     fieldCenOffset = Map.initialAngle - Map.gyro.getYaw();
 
     if (Map.driver.getPOV() != -1) {
-      DriveTo.goToCoords(0, 0);
+      DriveTo.goToCoords(0, 0, 1);
     } else if (Map.driver.getRawButton(1)) {
-      ShortTestPaths.driveThenBalance();
+      DriveRoute.drive();
     } else if (Map.driver.getRawButton(5)) {
       Balance.balanceRobot();
     } else {
@@ -78,6 +79,7 @@ public class Robot extends TimedRobot {
     if (Map.driver.getRawButton(3)) {
       Map.swerve.xPos = 0;
       Map.swerve.yPos = 0;
+      DriveRoute.index = 0;
       ShortTestPaths.onBoard = false;
     }
     
