@@ -7,6 +7,7 @@ import frc.robot.Drive.Wheel;
 
 public class DriveTo {
 
+    //create a pid controller for controlling the driving speed going to coordinates
     public static PIDController distAutoPID = new PIDController(0.02, 0.0001, 0.0);;
     public static double speedAuto;
     public static double angleAuto;
@@ -14,17 +15,22 @@ public class DriveTo {
     public static double distanceY;
     public static double distanceX;
     
+    //function to drive the swerve to an x & y coordinates fieldcentric using a pid
     public static boolean goToCoordsPID(double x, double y)
     {
+        //get the distance from the target to the current position
         distanceX = x - (Map.swerve.xPos + Map.swerve.coords[0]);
         distanceY = y - (Map.swerve.yPos - Map.swerve.coords[1]);
+        //using the x & y distance, get the angle to the target, and the distance using pythagoras theorem
         angleAuto = Wheel.toDegrees(Math.atan2(distanceY, distanceX));
         distAuto = Math.sqrt(distanceY * distanceY + distanceX * distanceX);
+        //then calculate the speed using the pid
         speedAuto = Math.abs(distAutoPID.calculate(distAuto / 40));
         if (speedAuto > 0.3) {
             speedAuto = 0.3;
         }
 
+        //drive the swerve at the calculated speed and angle, then calculate odometry
         Map.swerve.swerveDrive(angleAuto + Map.initialAngle - Map.gyro.getYaw(), speedAuto, 0);
         Map.swerve.odometry(Map.initialAngle - Map.gyro.getYaw());
 
@@ -32,33 +38,40 @@ public class DriveTo {
         SmartDashboard.putNumber("speed auto", speedAuto);
         SmartDashboard.putNumber("dist auto", distAuto);
 
-
+        //return true when the distance is less than 100 ticks
         if (distAuto < 100) {
             return true;
         }
         return false;
+
     }
 
-    public static boolean goToCoords(double x, double y, double speed) {
+    //function to drive the swerve to an x & y coordinates fieldcentric without a pid
+    public static boolean goToCoords(double x, double y, double speed)
+    {
+        //get the distance from the target to the current position
         distanceX = x - (Map.swerve.xPos + Map.swerve.coords[0]);
         distanceY = y - (Map.swerve.yPos - Map.swerve.coords[1]);
+        //using the x & y distance, get the angle to the target, and the distance using pythagoras theorem
         angleAuto = Wheel.toDegrees(Math.atan2(distanceY, distanceX));
         distAuto = Math.sqrt(distanceY * distanceY + distanceX * distanceX) / 400;
         if (distAuto > 0.3) {
             distAuto = 0.3;
         }
 
+        //drive the swerve at the calculated speed proportional to distance, and angle, then calculate odometry
         Map.swerve.swerveDrive(angleAuto + Map.initialAngle - Map.gyro.getYaw(), distAuto, 0);
         Map.swerve.odometry(Map.initialAngle - Map.gyro.getYaw());
 
         SmartDashboard.putNumber("angle auto", angleAuto);
         SmartDashboard.putNumber("dist auto", distAuto);
 
+        //return true when the distance is less than 100 ticks
         if (distAuto < 100) {
             return true;
         }
         return false;
-        
+
     }
 
     
