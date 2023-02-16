@@ -63,9 +63,9 @@ public class Robot extends TimedRobot {
     fieldCenOffset = Map.initialAngle - Map.gyro.getYaw();
 
     if (Map.driver.getPOV() != -1) {
-      DriveTo.goToCoordsPID(0, 0);
+      DriveTo.goToCoordsPID(0, 0, 100);
     } else if (Map.driver.getRawButton(1)) {
-      DriveRoute.drive();
+      DriveRoute.drivePID();
     } else if (Map.driver.getRawButton(5)) {
       Balance.balanceRobot();
     } else {
@@ -93,15 +93,4 @@ public class Robot extends TimedRobot {
   @Override
   public void disabledPeriodic() {}
 
-  @Override
-  public void testInit() {}
-
-  @Override
-  public void testPeriodic() {}
-
-  @Override
-  public void simulationInit() {}
-
-  @Override
-  public void simulationPeriodic() {}
 }
