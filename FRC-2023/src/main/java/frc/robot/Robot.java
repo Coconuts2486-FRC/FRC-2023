@@ -9,6 +9,7 @@ import frc.robot.Auto.Balance;
 import frc.robot.Auto.DriveRoute;
 import frc.robot.Auto.DriveTo;
 import frc.robot.Auto.ShortTestPaths;
+import frc.robot.Intake.Arm;
 import frc.robot.Intake.Rollers;
 
 /**
@@ -35,6 +36,7 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     Map.initialAngle = Map.gyro.getYaw();
+    Arm.initialize();
   }
 
   @Override
@@ -75,14 +77,15 @@ public class Robot extends TimedRobot {
 
     if (Map.driver.getRawButton(6)) {
       Map.initialAngle = Map.gyro.getYaw();
-    }
-    if (Map.driver.getRawButton(3)) {
       Map.swerve.xPos = 0;
       Map.swerve.yPos = 0;
       DriveRoute.index = 0;
       ShortTestPaths.onBoard = false;
     }
     
+    
+    Arm.ArmLiftSet(!Map.driver.getRawButton(4), Map.driver.getRawButton(3));
+    Arm.ArmExtend(Map.driver.getRawButton(2), Map.driver.getRawButton(4));
     Rollers.roll(Map.driver.getRawAxis(2), Map.driver.getRawAxis(3));
 
   }
