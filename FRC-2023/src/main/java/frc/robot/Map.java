@@ -8,8 +8,16 @@ public class Map {
 
     /*
      * JOYSTICK buttons and their controls:
-     * (1) A - Drive temporary auto path
-     * (2) B - Winch
+     * (1) A                - Drive temporary auto path
+     * (2) B                - Winch extends arm
+     * (3) X                - Arm goes to top position
+     * (4) Y                - Reverses arm movents: extend -> retract, top -> bottom
+     * (5) L Bumper         - Balances robot
+     * (6) R Bumper         - Zeroes odometry and angle
+     * (7) Share            - Nothing
+     * (8) Menu             - Nothing
+     * (9) Left Stick       - Nothing
+     * (10) Right Stick     - Nothing
      */
     
     public static Joystick driver = new Joystick(0);
