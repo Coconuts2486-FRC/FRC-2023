@@ -33,7 +33,7 @@ public class DriveRoute {
 
     //drive the ZigZag path using a PID but with a big cutoff so it starts moving to the next point before it slows down
     public static void drivePIDCutOff() {
-        if (DriveTo.goToCoordsPID(SimpleZigZag.path[index][0], SimpleZigZag.path[index][1], 500)) {
+        if (DriveTo.goToCoordsPID(SimpleZigZag.path[index][0], SimpleZigZag.path[index][1], 300)) {
             index = index + 1;
             if (index == SimpleZigZag.path.length) {
                 index = 0;

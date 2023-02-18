@@ -8,7 +8,7 @@ import frc.robot.Drive.Wheel;
 public class DriveTo {
 
     //create a pid controller for controlling the driving speed going to coordinates
-    public static PIDController distAutoPID = new PIDController(0.02, 0.0001, 0.0);;
+    public static PIDController distAutoPID = new PIDController(0.001, 0.0, 0.0);
     public static double speedAuto;
     public static double angleAuto;
     public static double distAuto;
@@ -26,8 +26,9 @@ public class DriveTo {
         distAuto = Math.sqrt(distanceY * distanceY + distanceX * distanceX);
         //then calculate the speed using the pid
         speedAuto = Math.abs(distAutoPID.calculate(distAuto));
-        if (speedAuto > 0.3) {
-            speedAuto = 0.3;
+        SmartDashboard.putNumber("speed auto", speedAuto);
+        if (speedAuto > 0.4) {
+            speedAuto = 0.4;
         }
 
         //drive the swerve at the calculated speed and angle, then calculate odometry
@@ -35,7 +36,7 @@ public class DriveTo {
         Map.swerve.odometry(Map.initialAngle - Map.gyro.getYaw());
 
         SmartDashboard.putNumber("angle auto", angleAuto);
-        SmartDashboard.putNumber("speed auto", speedAuto);
+        SmartDashboard.putNumber("speed auto actual", speedAuto);
         SmartDashboard.putNumber("dist auto", distAuto);
 
         //return true when the distance is less than 100 ticks
