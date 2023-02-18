@@ -29,4 +29,8 @@ public class Map {
     public static double deadband = 0.1;
 
     public static double elapsedTime;
+
+    public static int[] driverMode = {0, 1, 4};
+    public static int[] normalMode = {0, 1, 4};
+    public static int[] kateMode = {4, 5, 0};
 }

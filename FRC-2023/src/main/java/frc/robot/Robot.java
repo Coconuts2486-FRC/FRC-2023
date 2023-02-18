@@ -4,7 +4,11 @@
 
 package frc.robot;
 
+import java.util.Arrays;
+
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Auto.Balance;
 import frc.robot.Auto.DriveRoute;
 import frc.robot.Auto.DriveTo;
@@ -57,9 +61,9 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
-    x = Map.driver.getRawAxis(0) / 3;
-    y = Map.driver.getRawAxis(1) / 3;
-    twist = Map.driver.getRawAxis(4) / 4;
+    x = Map.driver.getRawAxis(Map.driverMode[0]) / 3;
+    y = Map.driver.getRawAxis(Map.driverMode[1]) / 3;
+    twist = Map.driver.getRawAxis(Map.driverMode[2]) / 4;
     joystickAngle = 180 + (Math.atan2(y, -x) / (Math.PI) * 180);
     joystickMag = Math.sqrt(x * x + y * y);
     fieldCenOffset = Map.initialAngle - Map.gyro.getYaw();
@@ -84,7 +88,7 @@ public class Robot extends TimedRobot {
     }
     
     
-    Arm.ArmLiftSet(!Map.driver.getRawButton(4), Map.driver.getRawButton(3));
+    Arm.LiftArm(!Map.driver.getRawButton(4), Map.driver.getRawButton(3));
     Arm.ArmExtend(Map.driver.getRawButton(2), Map.driver.getRawButton(4));
     Rollers.roll(Map.driver.getRawAxis(2), Map.driver.getRawAxis(3));
 
@@ -94,6 +98,21 @@ public class Robot extends TimedRobot {
   public void disabledInit() {}
 
   @Override
-  public void disabledPeriodic() {}
+  public void disabledPeriodic() {
+    if (Map.driver.getRawButtonPressed(9)) {
+      Map.driver.setRumble(RumbleType.kLeftRumble, 1);
+      Map.driver.setRumble(RumbleType.kRightRumble, 1);
+      if (Arrays.equals(Map.driverMode, Map.normalMode)) {
+        Map.driverMode = Map.kateMode;
+        SmartDashboard.putString("Drive mode", "Kate");
+      } else {
+        Map.driverMode = Map.normalMode;
+        SmartDashboard.putString("Drive mode", "Normal");
+      }
+    } else if (Map.driver.getRawButtonReleased(9)) {
+      Map.driver.setRumble(RumbleType.kLeftRumble, 0);
+      Map.driver.setRumble(RumbleType.kRightRumble, 0);
+    }
+  }
 
 }
