@@ -19,14 +19,15 @@ public class Map {
      * (9) Left Stick       - Nothing
      * (10) Right Stick     - Nothing
      */
+
+    public static double deadband = 0.1;
+    public static double ticksToInches = 56.5;
     
     public static Joystick driver = new Joystick(0);
     public static Swerve swerve = new Swerve();
 
     public static Pigeon2 gyro = new Pigeon2(40);
     public static double initialAngle;
-    
-    public static double deadband = 0.1;
 
     public static double elapsedTime;
 

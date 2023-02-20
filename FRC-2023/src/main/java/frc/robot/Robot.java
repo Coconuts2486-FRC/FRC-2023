@@ -70,9 +70,9 @@ public class Robot extends TimedRobot {
     fieldCenOffset = Map.initialAngle - Map.gyro.getYaw();
 
     if (Map.driver.getPOV() != -1) {
-      DriveTo.goToCoordsPID(0, 0, 100);
+      DriveTo.goToCoordsPID(0, 0, 1);
     } else if (Map.driver.getRawButton(1)) {
-      DriveRoute.driveSpeed(SimpleZigZag.path3, 300);
+      DriveRoute.driveSpeed(SimpleZigZag.path, 3);
     } else if (Map.driver.getRawButton(5)) {
       Balance.balanceRobot();
     } else {

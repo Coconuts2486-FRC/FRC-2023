@@ -6,7 +6,7 @@ public class ShortTestPaths {
     
     public static void driveThenBalance() {
         if (!onBoard) {
-            if (DriveTo.goToCoordsPID(-2200, 0, 100)) {
+            if (DriveTo.goToCoordsPID(-40, 0, 100)) {
                 onBoard = true;
             }
         } else {

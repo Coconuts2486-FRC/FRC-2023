@@ -68,21 +68,19 @@ public class Swerve {
         sumXY[2] = this.wheelBL.changeInXY;
         sumXY[3] = this.wheelBR.changeInXY;
 
-        sumX = (sumXY[0][0] + sumXY[1][0] + sumXY[2][0] + sumXY[3][0]) / 4;
-        sumY = (sumXY[0][1] + sumXY[1][1] + sumXY[2][1] + sumXY[3][1]) / 4;
+        sumX = (sumXY[0][0] + sumXY[1][0] + sumXY[2][0] + sumXY[3][0]) / (4 * Map.ticksToInches);
+        sumY = (sumXY[0][1] + sumXY[1][1] + sumXY[2][1] + sumXY[3][1]) / (4 * Map.ticksToInches);
 
         cycleTime = Timer.getFPGATimestamp() - Map.elapsedTime;
         Map.elapsedTime += cycleTime;
         this.xPos += sumX * cycleTime;
         this.yPos += sumY * cycleTime;
 
-        this.coords[0] = (Math.sin(Wheel.toRadians(robotAngle + 90)) + Math.cos(Wheel.toRadians(robotAngle + 90)) - 1) * 500;
-        this.coords[1] = (Math.sin(Wheel.toRadians(robotAngle)) + Math.cos(Wheel.toRadians(robotAngle)) - 1) * 525;
+        this.coords[0] = (Math.sin(Wheel.toRadians(robotAngle + 90)) + Math.cos(Wheel.toRadians(robotAngle + 90)) - 1) * (500 / Map.ticksToInches);
+        this.coords[1] = (Math.sin(Wheel.toRadians(robotAngle)) + Math.cos(Wheel.toRadians(robotAngle)) - 1) * (525 / Map.ticksToInches);
 
-        SmartDashboard.putNumber("x pos", this.xPos + coords[0]);
-        SmartDashboard.putNumber("y pos", this.yPos - coords[1]);
+        SmartDashboard.putNumber("x pos", (this.xPos + coords[0]));
+        SmartDashboard.putNumber("y pos", (this.yPos - coords[1]));
 
-        SmartDashboard.putNumber("x change", coords[0]);
-        SmartDashboard.putNumber("y change", coords[1]);
     }
 }

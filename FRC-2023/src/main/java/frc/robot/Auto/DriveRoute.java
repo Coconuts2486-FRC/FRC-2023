@@ -1,6 +1,7 @@
 package frc.robot.Auto;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Map;
 
 public class DriveRoute {
 
@@ -35,7 +36,7 @@ public class DriveRoute {
             }
         }
          
-        speedAuto = speedAuto / 2400;
+        speedAuto = speedAuto / (2400 / Map.ticksToInches);
 
         if (DriveTo.goToCoordsSpeed(path[index][0], path[index][1], cutoff, speedAuto)) {
             index = index + 1;
