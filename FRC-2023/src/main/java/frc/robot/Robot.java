@@ -13,6 +13,7 @@ import frc.robot.Auto.Balance;
 import frc.robot.Auto.DriveRoute;
 import frc.robot.Auto.DriveTo;
 import frc.robot.Auto.ShortTestPaths;
+import frc.robot.Auto.SimpleZigZag;
 import frc.robot.Intake.Arm;
 import frc.robot.Intake.Rollers;
 
@@ -71,7 +72,7 @@ public class Robot extends TimedRobot {
     if (Map.driver.getPOV() != -1) {
       DriveTo.goToCoordsPID(0, 0, 100);
     } else if (Map.driver.getRawButton(1)) {
-      DriveRoute.driveSpeed(300);
+      DriveRoute.driveSpeed(SimpleZigZag.path3, 300);
     } else if (Map.driver.getRawButton(5)) {
       Balance.balanceRobot();
     } else {

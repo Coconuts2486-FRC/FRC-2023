@@ -15,36 +15,36 @@ public class DriveRoute {
     }
 
     //drive the ZigZag path using a PID to go to each point along the curve
-    public static void drivePID(double cutoff) {
-        if (DriveTo.goToCoordsPID(SimpleZigZag.path[index][0], SimpleZigZag.path[index][1], cutoff)) {
+    public static void drivePID(double[][] path, double cutoff) {
+        if (DriveTo.goToCoordsPID(path[index][0], path[index][1], cutoff)) {
             index = index + 1;
-            if (index == SimpleZigZag.path.length) {
+            if (index == path.length) {
                 index = 0;
             }
         }
-        SmartDashboard.putNumber("target x", SimpleZigZag.path[index][0]);
-        SmartDashboard.putNumber("target y", SimpleZigZag.path[index][1]);
+        SmartDashboard.putNumber("target x", path[index][0]);
+        SmartDashboard.putNumber("target y", path[index][1]);
     }
 
     //drive the ZigZag path using a PID to go to each point along the curve
-    public static void driveSpeed(double cutoff) {
+    public static void driveSpeed(double[][] path, double cutoff) {
         speedAuto = 0;
         for (int i = -3; i < 5; i++) {
-            if (index + i > 0 && index + i + 1 < SimpleZigZag.path.length) {
-                speedAuto += distBetweeenPoints(SimpleZigZag.path[index + i], SimpleZigZag.path[index + i + 1]);
+            if (index + i > 0 && index + i + 1 < path.length) {
+                speedAuto += distBetweeenPoints(path[index + i], path[index + i + 1]);
             }
         }
          
         speedAuto = speedAuto / 2400;
 
-        if (DriveTo.goToCoordsSpeed(SimpleZigZag.path[index][0], SimpleZigZag.path[index][1], cutoff, speedAuto)) {
+        if (DriveTo.goToCoordsSpeed(path[index][0], path[index][1], cutoff, speedAuto)) {
             index = index + 1;
-            if (index == SimpleZigZag.path.length) {
+            if (index == path.length) {
                 index = 0;
             }
         }
-        SmartDashboard.putNumber("target x", SimpleZigZag.path[index][0]);
-        SmartDashboard.putNumber("target y", SimpleZigZag.path[index][1]);
+        SmartDashboard.putNumber("target x", path[index][0]);
+        SmartDashboard.putNumber("target y", path[index][1]);
     }
 
 }
