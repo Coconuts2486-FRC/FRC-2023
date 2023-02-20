@@ -9,8 +9,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Arm {
 
-    public static TalonSRX Winch = new TalonSRX(31);
+    public static TalonSRX Winch = new TalonSRX(32);
     public static TalonFX ArmLifter = new TalonFX(30);
+    public static TalonFX ArmLifter2 = new TalonFX(31);
 
     public static double armSpeed;
     public static double lastPos;
@@ -21,6 +22,9 @@ public class Arm {
     public static void initialize() {
         Winch.setNeutralMode(NeutralMode.Brake);
         ArmLifter.setNeutralMode(NeutralMode.Brake);
+        ArmLifter2.setNeutralMode(NeutralMode.Brake);
+        ArmLifter2.follow(ArmLifter);
+        ArmLifter2.setInverted(true);
     }
 
     //move the arm either to the top or bottom

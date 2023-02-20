@@ -71,7 +71,7 @@ public class Robot extends TimedRobot {
     if (Map.driver.getPOV() != -1) {
       DriveTo.goToCoordsPID(0, 0, 100);
     } else if (Map.driver.getRawButton(1)) {
-      DriveRoute.drivePID(300);
+      DriveRoute.driveSpeed(300);
     } else if (Map.driver.getRawButton(5)) {
       Balance.balanceRobot();
     } else {

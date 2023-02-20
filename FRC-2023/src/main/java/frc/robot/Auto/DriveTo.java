@@ -46,5 +46,34 @@ public class DriveTo {
         return false;
 
     }
+
+    public static boolean goToCoordsSpeed(double x, double y, double cutoff, double speedAuto)
+    {
+        //get the distance from the target to the current position
+        distanceX = x - (Map.swerve.xPos + Map.swerve.coords[0]);
+        distanceY = y - (Map.swerve.yPos - Map.swerve.coords[1]);
+        //using the x & y distance, get the angle to the target, and the distance using pythagoras theorem
+        angleAuto = Wheel.toDegrees(Math.atan2(distanceY, distanceX));
+        distAuto = Math.sqrt(distanceY * distanceY + distanceX * distanceX);
+        SmartDashboard.putNumber("speed auto", speedAuto);
+        if (speedAuto > 0.5) {
+            speedAuto = 0.5;
+        }
+
+        //drive the swerve at the calculated speed and angle, then calculate odometry
+        Map.swerve.swerveDrive(angleAuto + Map.initialAngle - Map.gyro.getYaw(), speedAuto, 0);
+        Map.swerve.odometry(Map.initialAngle - Map.gyro.getYaw());
+
+        SmartDashboard.putNumber("angle auto", angleAuto);
+        SmartDashboard.putNumber("speed auto actual", speedAuto);
+        SmartDashboard.putNumber("dist auto", distAuto);
+
+        //return true when the distance is less than 100 ticks
+        if (distAuto < cutoff) {
+            return true;
+        }
+        return false;
+
+    }
     
 }
