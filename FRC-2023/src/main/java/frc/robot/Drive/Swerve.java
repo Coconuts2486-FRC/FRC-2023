@@ -21,6 +21,8 @@ public class Swerve {
     public double yPos;
     public double[] coords = {0, 0};
 
+    public static double straightAngle;
+
     //offset, module numbers, id's for rotate and for drive, rotation, drive, and angle
     public Swerve()
     {
@@ -42,13 +44,14 @@ public class Swerve {
                 speed = 0;
             }
             if (Math.abs(twist) > Map.deadband) {
+                straightAngle = Map.gyro.getYaw();
                 if (twist < 0) {
                     twist = twist - Map.deadband;
                 } else {
                     twist = twist + Map.deadband;
                 }
             } else {
-                twist = 0;
+                twist = (straightAngle - Map.gyro.getYaw()) / 40;
             }
             
             this.wheelFR.drive(angle, speed, twist, cycleTime);

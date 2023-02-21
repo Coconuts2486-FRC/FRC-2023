@@ -110,7 +110,9 @@ public class Wheel {
         }
 
         //take speed so odometry doesn't act stupid
+        this.lastAngle = this.currentAngle;
         this.currentAngle = this.angleSensor.getAbsolutePosition() - this.offset;
+        this.angleChange = this.lastAngle - this.currentAngle;
         this.currentSpeed = this.driveMotor.getSelectedSensorVelocity();
         odometry(Map.initialAngle - Map.gyro.getYaw(), cycleTime);
 
@@ -119,15 +121,18 @@ public class Wheel {
     //calculates x and y speeds of the wheel in ticks/100ms
     public void odometry(double robotAngle, double cycleTime)
     {
-        //split the motor speed into the x and y velocities of the wheel using trig
-        if (this.id.equals("FR") || this.id.equals("FL")) {
-            this.changeInXY[0] = (Math.cos(toRadians(this.currentAngle - robotAngle)) * -this.currentSpeed) * cycleTime;
-            this.changeInXY[1] = (Math.sin(toRadians(this.currentAngle - robotAngle)) * -this.currentSpeed) * cycleTime;
-        } else {
-            this.changeInXY[0] = (Math.cos(toRadians(this.currentAngle - robotAngle)) * -this.currentSpeed) * cycleTime;
-            this.changeInXY[1] = (Math.sin(toRadians(this.currentAngle - robotAngle)) * -this.currentSpeed) * cycleTime;
+        if (angleChange > 180.0) {
+            angleChange -= 360.0;
+        } else if (angleChange < -180.0) {
+            angleChange += 360.0;
         }
- 
+
+        SmartDashboard.putNumber("Angle change", angleChange);
+
+        //split the motor speed into the x and y velocities of the wheel, add offset for rotation of the wheel turning the wheel
+        this.changeInXY[0] = (splitX(-this.currentSpeed, this.currentAngle - robotAngle) * cycleTime) + splitX(-angleChange / 60, this.currentAngle - robotAngle);
+        this.changeInXY[1] = (splitY(-this.currentSpeed, this.currentAngle - robotAngle) * cycleTime) + splitX(-angleChange / 60, this.currentAngle - robotAngle);
+       
     }
 
     // Returns a double array {distance to closest target, reverse variable}
@@ -177,8 +182,8 @@ public class Wheel {
         double angleTwo = arr2[1];
 
         //split the vectors into x and y and add the two Xs and two Ys and add them together
-        double newX = (magnitudeOne * Math.cos(toRadians(angleOne))) + (magnitudeTwo * Math.cos(toRadians(angleTwo)));
-        double newY = (magnitudeOne * Math.sin(toRadians(angleOne))) + (magnitudeTwo * Math.sin(toRadians(angleTwo)));
+        double newX = splitX(magnitudeOne, angleOne) + splitX(magnitudeTwo, angleTwo);
+        double newY = splitY(magnitudeOne, angleOne) + splitY(magnitudeTwo, angleTwo);
 
         //turn the total Xs and Ys into a new vector
         double newAngle = toDegrees(Math.atan2(newY, newX));
@@ -201,4 +206,15 @@ public class Wheel {
         return (angle * 180) / Math.PI;
     }
 
+    //splits a given vector into it's x and y components and returns the x
+    public static double splitX(double magnitude, double angle)
+    {
+        return magnitude * Math.cos(toRadians(angle));
+    }
+
+    //splits a given vector into it's x and y components and returns the y
+    public static double splitY(double magnitude, double angle)
+    {
+        return magnitude * Math.sin(toRadians(angle));
+    }
 }
