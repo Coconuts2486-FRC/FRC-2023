@@ -32,7 +32,9 @@ public class Swerve {
 
     public void swerveDrive(double angle, double speed, double twist)
     {
-        SmartDashboard.putNumber("angle", angle);
+        cycleTime = Timer.getFPGATimestamp() - Map.elapsedTime;
+        Map.elapsedTime += cycleTime;
+
         if (speed > Map.deadband || Math.abs(twist) > Map.deadband) {
             if (speed > Map.deadband) {
                 speed = speed - Map.deadband;
@@ -49,15 +51,15 @@ public class Swerve {
                 twist = 0;
             }
             
-            this.wheelFR.drive(angle, speed, twist);
-            this.wheelFL.drive(angle, speed, twist);
-            this.wheelBL.drive(angle, speed, twist);
-            this.wheelBR.drive(angle, speed, twist);
+            this.wheelFR.drive(angle, speed, twist, cycleTime);
+            this.wheelFL.drive(angle, speed, twist, cycleTime);
+            this.wheelBL.drive(angle, speed, twist, cycleTime);
+            this.wheelBR.drive(angle, speed, twist, cycleTime);
         } else {
-            this.wheelFR.stop();
-            this.wheelFL.stop();
-            this.wheelBL.stop();
-            this.wheelBR.stop();
+            this.wheelFR.stop(cycleTime);
+            this.wheelFL.stop(cycleTime);
+            this.wheelBL.stop(cycleTime);
+            this.wheelBR.stop(cycleTime);
         }
     }
 
@@ -71,10 +73,8 @@ public class Swerve {
         sumX = (sumXY[0][0] + sumXY[1][0] + sumXY[2][0] + sumXY[3][0]) / (4 * Map.ticksToInches);
         sumY = (sumXY[0][1] + sumXY[1][1] + sumXY[2][1] + sumXY[3][1]) / (4 * Map.ticksToInches);
 
-        cycleTime = Timer.getFPGATimestamp() - Map.elapsedTime;
-        Map.elapsedTime += cycleTime;
-        this.xPos += sumX * cycleTime;
-        this.yPos += sumY * cycleTime;
+        this.xPos += sumX;
+        this.yPos += sumY;
 
         this.coords[0] = (Math.sin(Wheel.toRadians(robotAngle + 90)) + Math.cos(Wheel.toRadians(robotAngle + 90)) - 1) * (500 / Map.ticksToInches);
         this.coords[1] = (Math.sin(Wheel.toRadians(robotAngle)) + Math.cos(Wheel.toRadians(robotAngle)) - 1) * (525 / Map.ticksToInches);

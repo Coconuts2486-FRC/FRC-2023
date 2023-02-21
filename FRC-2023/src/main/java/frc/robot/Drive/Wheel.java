@@ -28,7 +28,9 @@ public class Wheel {
     private PIDController anglePID;
     private PIDController speedPID;
 
+    private double lastAngle;
     public double currentAngle;
+    public double angleChange;
     public double currentSpeed;
     public double[] changeInXY = {0, 0};
 
@@ -62,7 +64,7 @@ public class Wheel {
         }
     }
 
-    public void drive(double angle, double speed, double twist)
+    public void drive(double angle, double speed, double twist, double cycleTime)
     {
         //get our strafe and rotate vectors from the inputs
         strafeVector[0] = speed;
@@ -71,7 +73,9 @@ public class Wheel {
         this.rotateVector[1] = this.rotateAngle;
 
         //get the current and angle and speed of the wheel
+        this.lastAngle = this.currentAngle;
         this.currentAngle = this.angleSensor.getAbsolutePosition() - this.offset;
+        this.angleChange = this.lastAngle - this.currentAngle;
         this.currentSpeed = this.driveMotor.getSelectedSensorVelocity();
 
         //combine the strafe and rotate vectors into a drive vector and find the shortest path
@@ -84,18 +88,18 @@ public class Wheel {
         } else {
             this.driveMotor.set(ControlMode.PercentOutput, this.shortcut[1] * this.speedPID.calculate(Math.abs(this.currentSpeed) - (this.driveVector[0] * 24000)));
         }
-        // this.driveMotor.set(ControlMode.PercentOutput, this.speedPID.calculate((this.currentSpeed - (driveVector[0] * 24000))));
+        this.driveMotor.set(ControlMode.PercentOutput, this.speedPID.calculate((this.currentSpeed - (driveVector[0] * 24000))));
         this.rotateMotor.set(ControlMode.PercentOutput, this.anglePID.calculate(this.shortcut[0]));
 
         SmartDashboard.putNumber("current speed " + this.id, this.currentSpeed);
         calculated = 1;
 
         //calculate the x and y speeds of the wheel
-        odometry(Map.initialAngle - Map.gyro.getYaw());
+        odometry(Map.initialAngle - Map.gyro.getYaw(), cycleTime);
     }
 
     //make sure the motors stop moving
-    public void stop()
+    public void stop(double cycleTime)
     {
         //set both motors to 0 percent power
         this.driveMotor.set(ControlMode.PercentOutput, 0);
@@ -109,20 +113,20 @@ public class Wheel {
         //take speed so odometry doesn't act stupid
         this.currentAngle = this.angleSensor.getAbsolutePosition() - this.offset;
         this.currentSpeed = this.driveMotor.getSelectedSensorVelocity();
-        odometry(Map.initialAngle - Map.gyro.getYaw());
+        odometry(Map.initialAngle - Map.gyro.getYaw(), cycleTime);
 
     }
 
     //calculates x and y speeds of the wheel in ticks/100ms
-    public void odometry(double robotAngle)
+    public void odometry(double robotAngle, double cycleTime)
     {
         //split the motor speed into the x and y velocities of the wheel using trig
         if (this.id.equals("FR") || this.id.equals("FL")) {
-            this.changeInXY[0] = Math.cos(toRadians(this.currentAngle - robotAngle)) * -this.currentSpeed;
-            this.changeInXY[1] = Math.sin(toRadians(this.currentAngle - robotAngle)) * -this.currentSpeed;
+            this.changeInXY[0] = (Math.cos(toRadians(this.currentAngle - robotAngle)) * -this.currentSpeed) * cycleTime;
+            this.changeInXY[1] = (Math.sin(toRadians(this.currentAngle - robotAngle)) * -this.currentSpeed) * cycleTime;
         } else {
-            this.changeInXY[0] = Math.cos(toRadians(this.currentAngle - robotAngle)) * -this.currentSpeed;
-            this.changeInXY[1] = Math.sin(toRadians(this.currentAngle - robotAngle)) * -this.currentSpeed;
+            this.changeInXY[0] = (Math.cos(toRadians(this.currentAngle - robotAngle)) * -this.currentSpeed) * cycleTime;
+            this.changeInXY[1] = (Math.sin(toRadians(this.currentAngle - robotAngle)) * -this.currentSpeed) * cycleTime;
         }
  
     }
