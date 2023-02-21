@@ -88,7 +88,6 @@ public class Wheel {
         } else {
             this.driveMotor.set(ControlMode.PercentOutput, this.shortcut[1] * this.speedPID.calculate(Math.abs(this.currentSpeed) - (this.driveVector[0] * 24000)));
         }
-        this.driveMotor.set(ControlMode.PercentOutput, this.speedPID.calculate((this.currentSpeed - (driveVector[0] * 24000))));
         this.rotateMotor.set(ControlMode.PercentOutput, this.anglePID.calculate(this.shortcut[0]));
 
         SmartDashboard.putNumber("current speed " + this.id, this.currentSpeed);
