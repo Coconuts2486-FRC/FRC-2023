@@ -6,7 +6,6 @@ package frc.robot;
 
 import java.util.Arrays;
 
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -44,11 +43,7 @@ public class Robot extends TimedRobot {
         Map.initialAngle = Map.gyro.getYaw();
         Arm.initialize();
 
-        switch (DriverStation.getAlliance()) {
-            case Blue: Map.isRedAlliance = false;
-            case Red: Map.isRedAlliance = true;
-            case Invalid: Map.isRedAlliance = true;
-        }
+        Map.lightOn = true;
         Map.changePDPLights(true);
     }
 
@@ -96,6 +91,7 @@ public class Robot extends TimedRobot {
             ShortTestPaths.onBoard = false;
         }
         
+		Map.changePDPLights(Map.coDriver.getRawButtonPressed(1));
         Arm.LiftArm(!Map.driver.getRawButton(4), Map.driver.getRawButton(3));
         Arm.ArmExtend(Map.driver.getRawButton(2), Map.driver.getRawButton(4));
         Rollers.roll(Map.driver.getRawAxis(2), Map.driver.getRawAxis(3));

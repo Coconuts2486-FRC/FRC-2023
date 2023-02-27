@@ -22,10 +22,10 @@ public class Map {
      * (10) Right Stick     - Nothing
      * 
      * CODRIVER JOYSTICK buttons and their controls:
-     * (1)
-     * (2)
-     * (3)
-     * (4)
+     * (1) A                - Lights toggle
+     * (2) B
+     * (3) X
+     * (4) Y
      * (5)
      * (6)
      * (7)
@@ -44,7 +44,7 @@ public class Map {
     public static Swerve swerve = new Swerve();
 
     public static PowerDistribution pdp = new PowerDistribution(0, PowerDistribution.ModuleType.kRev);
-    public static boolean isRedAlliance = true;
+    public static boolean lightOn = true;
 
     public static Pigeon2 gyro = new Pigeon2(40);
     public static double initialAngle;
@@ -62,7 +62,7 @@ public class Map {
             return;
         }
         // switch the color and change the variable
-        pdp.setSwitchableChannel(isRedAlliance);
-        isRedAlliance = !isRedAlliance;
+        pdp.setSwitchableChannel(lightOn);
+        lightOn = !lightOn;
     }
 }
