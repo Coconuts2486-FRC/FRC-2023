@@ -99,21 +99,21 @@ public class Robot extends TimedRobot {
         Arm.ArmExtend(Map.driver.getRawButton(2), Map.driver.getRawButton(4));
 
         if (Map.coDriver.getRawButtonPressed(2)) {
-            if (Map.intakePos == 0.28) {
+            if (Map.intakePos == 0.4) {
                 Map.intakePos = 0;
             } else {
-                Map.intakePos = 0.28;
+                Map.intakePos = 0.4;
             }
         }
 
-        Map.intakeServoLeft.set(Map.intakePos + 0.03);
-        Map.intakeServoRight.set(1 - Map.intakePos);
+        Map.intakeServoLeft.set(Map.intakePos - 0.07);
+        Map.intakeServoRight.set((1 - Map.intakePos) + 0.1);
 
         double rt = Map.coDriver.getRawAxis(3);
         Map.linearActuatorLeft.set(rt);
         // Map.linearActuatorRight.set(rt);
 
-        SmartDashboard.putNumber("Claw Pos", Map.coDriver.getRawAxis(3));
+        SmartDashboard.putNumber("Intake Pos", Map.intakePos);
         Rollers.roll(Map.driver.getRawAxis(2), Map.driver.getRawAxis(3));
 
     }

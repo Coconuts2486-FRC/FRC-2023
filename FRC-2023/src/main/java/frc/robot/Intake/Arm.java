@@ -27,9 +27,6 @@ public class Arm {
         ArmLifter2.follow(ArmLifter);
         ArmLifter2.setInverted(true);
 
-        Map.linearActuatorLeft.setBounds(1.0, 0.8, 0.5, 0.2, 0);
-        Map.linearActuatorLeft.setSpeed(1);
-
     }
 
     //move the arm either to the top or bottom
