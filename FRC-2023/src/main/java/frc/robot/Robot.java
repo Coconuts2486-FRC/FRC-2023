@@ -6,6 +6,7 @@ package frc.robot;
 
 import java.util.Arrays;
 
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -43,8 +44,7 @@ public class Robot extends TimedRobot {
         Map.initialAngle = Map.gyro.getYaw();
         Arm.initialize();
 
-        Map.lightOn = true;
-        Map.changePDPLights(true);
+        CameraServer.startAutomaticCapture();
     }
 
     @Override
@@ -91,9 +91,29 @@ public class Robot extends TimedRobot {
             ShortTestPaths.onBoard = false;
         }
         
-		Map.changePDPLights(Map.coDriver.getRawButtonPressed(1));
+		if (Map.coDriver.getRawButtonPressed(1)) {
+            Map.lightStrip();
+        }
+        SmartDashboard.putBoolean("Lights on", Map.lightOn);
         Arm.LiftArm(!Map.driver.getRawButton(4), Map.driver.getRawButton(3));
         Arm.ArmExtend(Map.driver.getRawButton(2), Map.driver.getRawButton(4));
+
+        if (Map.coDriver.getRawButtonPressed(2)) {
+            if (Map.intakePos == 0.28) {
+                Map.intakePos = 0;
+            } else {
+                Map.intakePos = 0.28;
+            }
+        }
+
+        Map.intakeServoLeft.set(Map.intakePos + 0.03);
+        Map.intakeServoRight.set(1 - Map.intakePos);
+
+        double rt = Map.coDriver.getRawAxis(3);
+        Map.linearActuatorLeft.set(rt);
+        // Map.linearActuatorRight.set(rt);
+
+        SmartDashboard.putNumber("Claw Pos", Map.coDriver.getRawAxis(3));
         Rollers.roll(Map.driver.getRawAxis(2), Map.driver.getRawAxis(3));
 
     }

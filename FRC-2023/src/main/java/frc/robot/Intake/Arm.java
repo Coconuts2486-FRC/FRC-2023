@@ -6,6 +6,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Map;
 
 public class Arm {
 
@@ -25,6 +26,10 @@ public class Arm {
         ArmLifter2.setNeutralMode(NeutralMode.Brake);
         ArmLifter2.follow(ArmLifter);
         ArmLifter2.setInverted(true);
+
+        Map.linearActuatorLeft.setBounds(1.0, 0.8, 0.5, 0.2, 0);
+        Map.linearActuatorLeft.setSpeed(1);
+
     }
 
     //move the arm either to the top or bottom
@@ -73,5 +78,21 @@ public class Arm {
             Winch.set(ControlMode.PercentOutput, -0.5);
         }
     }
+
+    public static void IntakeExtend(boolean move) {
+        if (!move) {
+            return;
+        }
+        Map.intakeServoLeft.set(Map.intakePos + 0.5);
+        Map.intakeServoRight.set(-Map.intakePos + 0.5);
+        Map.intakePos = -Map.intakePos;
+
+        SmartDashboard.putNumber("ServoAngle Left", Map.intakeServoLeft.getPosition());
+        SmartDashboard.putNumber("ServoAngle Right", Map.intakeServoRight.getPosition());
+    }
     
+    public static void ClawOpen() {
+        Map.linearActuatorLeft.set(Map.clawPos);
+        Map.linearActuatorRight.set(Map.clawPos);
+    }
 }
