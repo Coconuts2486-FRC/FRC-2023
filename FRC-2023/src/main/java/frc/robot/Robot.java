@@ -67,7 +67,7 @@ public class Robot extends TimedRobot {
     public void teleopPeriodic() {
         x = Map.driver.getRawAxis(Map.driverMode[0]) / 3;
         y = Map.driver.getRawAxis(Map.driverMode[1]) / 3;
-        twist = Map.driver.getRawAxis(Map.driverMode[2]) / 4;
+        twist = Map.driver.getRawAxis(Map.driverMode[2]) / 2;
         joystickAngle = 180 + (Math.atan2(y, -x) / (Math.PI) * 180);
         joystickMag = Math.sqrt(x * x + y * y);
         fieldCenOffset = Map.initialAngle - Map.gyro.getYaw();
@@ -95,8 +95,6 @@ public class Robot extends TimedRobot {
             Map.lightStrip();
         }
         SmartDashboard.putBoolean("Lights on", Map.lightOn);
-        Arm.LiftArm(!Map.driver.getRawButton(4), Map.driver.getRawButton(3));
-        Arm.ArmExtend(Map.driver.getRawButton(2), Map.driver.getRawButton(4));
 
         if (Map.coDriver.getRawButtonPressed(2)) {
             if (Map.intakePos == 0.4) {
@@ -109,11 +107,19 @@ public class Robot extends TimedRobot {
         Map.intakeServoLeft.set(Map.intakePos - 0.07);
         Map.intakeServoRight.set((1 - Map.intakePos) + 0.1);
 
-        double rt = Map.coDriver.getRawAxis(3);
-        Map.linearActuatorLeft.set(rt);
-        // Map.linearActuatorRight.set(rt);
+        if (Map.coDriver.getRawButtonPressed(3)) {
+            Map.clawPos = -Map.clawPos;
+        }
+        if (Map.coDriver.getRawButtonPressed(4)) {
+            Map.lightStrip();
+        }
 
-        SmartDashboard.putNumber("Intake Pos", Map.intakePos);
+        Map.linearActuatorLeft.setSpeed(Map.clawPos);
+        Map.linearActuatorRight.setSpeed(Map.clawPos);
+
+        Arm.ShowEncoder();
+
+        SmartDashboard.putNumber("Intake Pos", Map.clawPos);
         Rollers.roll(Map.driver.getRawAxis(2), Map.driver.getRawAxis(3));
 
     }

@@ -1,5 +1,7 @@
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.sensors.Pigeon2;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -37,6 +39,7 @@ public class Map {
      */
 
     public static double deadband = 0.1;
+    public static double deadbandTwist = 0.1;
     public static double ticksToInches = 56.5;
     
     public static Joystick driver = new Joystick(0);
@@ -55,7 +58,11 @@ public class Map {
     public static double intakePos = 0.28;
     public static Servo intakeServoLeft = new Servo(2);
     public static Servo intakeServoRight = new Servo(3);
-    public static double clawPos = 0.28;
+    public static double clawPos = 1;
+
+    public static TalonSRX winch = new TalonSRX(32);
+    public static TalonFX armLifter = new TalonFX(30);
+    public static TalonFX armLifter2 = new TalonFX(31);
 
     public static double elapsedTime;
 
@@ -65,8 +72,6 @@ public class Map {
 
     // function for changing the color of the lights
     public static void lightStrip() {
-        // do nothing if the button isn't pressed
-
         // switch the color and change the variable
         pdp.setSwitchableChannel(Map.lightOn);
         SmartDashboard.putBoolean("Switchable Channel", pdp.getSwitchableChannel());

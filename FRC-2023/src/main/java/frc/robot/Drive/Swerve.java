@@ -37,19 +37,22 @@ public class Swerve {
         cycleTime = Timer.getFPGATimestamp() - Map.elapsedTime;
         Map.elapsedTime += cycleTime;
 
-        if (speed > Map.deadband || Math.abs(twist) > Map.deadband) {
+        if (speed > Map.deadband || Math.abs(twist) > Map.deadbandTwist) {
             if (speed > Map.deadband) {
                 speed = speed - Map.deadband;
             } else {
                 speed = 0;
             }
-            if (Math.abs(twist) > Map.deadband) {
+            if (Math.abs(twist) > Map.deadbandTwist) {
                 straightAngle = Map.gyro.getYaw();
                 if (twist < 0) {
-                    twist = twist - Map.deadband;
+                    twist = twist + Map.deadbandTwist;
                 } else {
-                    twist = twist + Map.deadband;
+                    twist = twist - Map.deadbandTwist;
                 }
+            } else {
+                twist = 0;
+                // twist = (straightAngle - Map.gyro.getYaw()) / -120;
             }
             
             this.wheelFR.drive(angle, speed, twist, cycleTime);
