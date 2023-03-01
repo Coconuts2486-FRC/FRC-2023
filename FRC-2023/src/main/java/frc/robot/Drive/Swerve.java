@@ -6,7 +6,7 @@ import frc.robot.Map;
 
 public class Swerve {
 
-    private int[][] ports = {{1, 5, 9}, {2, 6, 10}, {3, 7, 11}, {4, 8, 12}};
+    private int[][] ports = {{13, 5, 9}, {2, 6, 10}, {3, 7, 11}, {4, 8, 12}};
     private double[][] sumXY = {{0, 0}, {0, 0}, {0, 0}, {0, 0}};
     private double sumX;
     private double sumY;
@@ -50,8 +50,6 @@ public class Swerve {
                 } else {
                     twist = twist + Map.deadband;
                 }
-            } else {
-                twist = (straightAngle - Map.gyro.getYaw()) / 40;
             }
             
             this.wheelFR.drive(angle, speed, twist, cycleTime);
