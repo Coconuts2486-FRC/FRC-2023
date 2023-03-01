@@ -4,12 +4,8 @@
 
 package frc.robot;
 
-import java.util.Arrays;
-
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.GenericHID.RumbleType;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Auto.Balance;
 import frc.robot.Auto.DriveRoute;
 import frc.robot.Auto.ShortTestPaths;
@@ -117,21 +113,6 @@ public class Robot extends TimedRobot {
     public void disabledInit() {}
 
     @Override
-    public void disabledPeriodic() {
-        if (Map.driver.getRawButtonPressed(9)) {
-            Map.driver.setRumble(RumbleType.kLeftRumble, 1);
-            Map.driver.setRumble(RumbleType.kRightRumble, 1);
-            if (Arrays.equals(Map.driverMode, Map.normalMode)) {
-                Map.driverMode = Map.kateMode;
-                SmartDashboard.putString("Drive mode", "Kate");
-            } else {
-                Map.driverMode = Map.normalMode;
-                SmartDashboard.putString("Drive mode", "Normal");
-            }
-        } else if (Map.driver.getRawButtonReleased(9)) {
-            Map.driver.setRumble(RumbleType.kLeftRumble, 0);
-            Map.driver.setRumble(RumbleType.kRightRumble, 0);
-        }
-    }
+    public void disabledPeriodic() {}
 
 }

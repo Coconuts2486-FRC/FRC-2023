@@ -86,10 +86,6 @@ public class Map {
 
     public static double elapsedTime;
 
-    public static int[] driverMode = {0, 1, 4};
-    public static int[] normalMode = {0, 1, 4};
-    public static int[] kateMode = {4, 5, 0};
-
     // function for changing the color of the lights
     public static void lightStrip(boolean buttonPress) {
         if (buttonPress) {
