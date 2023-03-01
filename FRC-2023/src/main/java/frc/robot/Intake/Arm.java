@@ -1,7 +1,7 @@
 package frc.robot.Intake;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Map;
@@ -25,47 +25,54 @@ public class Arm {
         // Map.linearActuatorLeft.setBounds(2.0, 1.9, 1.5, 1.1, 1.0);
         // Map.linearActuatorRight.setBounds(2.0, 1.9, 1.5, 1.1, 1.0);
 
-        Map.armLifter.configFactoryDefault();
-        Map.armLifter2.configFactoryDefault();
-
-
         Map.armLifter.setNeutralMode(NeutralMode.Brake);
         Map.armLifter2.setNeutralMode(NeutralMode.Brake);
 
-
-        Map.armLifter.configNeutralDeadband(0.001);
-        Map.armLifter2.configNeutralDeadband(0.001);
-
-
-        Map.armLifter.configNominalOutputForward(0);
-        Map.armLifter.configNominalOutputReverse(0);
-        Map.armLifter.configPeakOutputForward(1);
-        Map.armLifter.configPeakOutputReverse(-1);
-
-
-        Map.armLifter2.configNominalOutputForward(0);    
-        Map.armLifter2.configNominalOutputReverse(0);      
-        Map.armLifter2.configPeakOutputForward(1);
-        Map.armLifter2.configPeakOutputReverse(-1);
-
-
-        Map.armLifter.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, 0, 0);
-        Map.armLifter2.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, 0, 0);
-
-
         Map.armLifter2.follow(Map.armLifter);
         Map.armLifter2.setInverted(true);
-        //Map.armLifter.setSelectedSensorPosition(0);
-
-
-        Map.armLifter.config_kP(0, 0.1);
     }
 
-    public static void ShowEncoder() {
-        SmartDashboard.putNumber("Arm ticks angle", Map.armLifter.getSelectedSensorPosition());
-
-        // Map.armLifter.set(ControlMode.Position, 0);
+    //extend the arm or retract the arm - NO LIMITS CURRENTLY -
+    public static void ArmExtend(double forward, double reverse) {
+        if (forward > 0.1 || reverse > 0.1) {
+            Map.winch.set(ControlMode.PercentOutput, (forward - 0.1) - (reverse - 0.1));
+        } else {
+            Map.winch.set(ControlMode.PercentOutput, 0);
+        }
     }
+
+    //move the arm either to the top or bottom
+    public static void LiftArm(boolean top, boolean bottom) {
+
+        currPos = Map.armLifter.getSelectedSensorPosition();
+
+        //if we are trying to move to the top, the set pos should be 0, otherwise 130,000
+        if (top) {
+            setPos = -102000;
+        } else if (bottom) {
+            setPos = 0;
+        } else {
+            setPos = currPos;
+        }
+
+        // calculate the speed of the motor and maximize it at 40%
+        double armSpeed = (setPos - currPos) / 80000;
+        if (armSpeed > 0.3) {
+            armSpeed = 0.3;
+        }
+
+        armSpeed = armSpeed * 0.7;
+
+        if (Map.topLimit.get() || Map.bottomLimit.get()) {
+            Map.armLifter.set(ControlMode.PercentOutput, 0);
+        } else {
+            Map.armLifter.set(ControlMode.PercentOutput, armSpeed);
+        }  
+
+        SmartDashboard.putNumber("Arm speed", armSpeed);
+        SmartDashboard.putNumber("Arm angle", currPos);
+    }
+
 
     public static void IntakeExtend(boolean move) {
         if (!move) {

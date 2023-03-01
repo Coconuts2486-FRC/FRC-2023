@@ -4,6 +4,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.sensors.Pigeon2;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.Servo;
@@ -55,7 +56,7 @@ public class Map {
 
     public static Servo linearActuatorLeft = new Servo(0);
     public static Servo linearActuatorRight = new Servo(1);
-    public static double intakePos = 0.28;
+    public static double intakePos = 0.4;
     public static Servo intakeServoLeft = new Servo(2);
     public static Servo intakeServoRight = new Servo(3);
     public static double clawPos = 1;
@@ -63,6 +64,9 @@ public class Map {
     public static TalonSRX winch = new TalonSRX(32);
     public static TalonFX armLifter = new TalonFX(30);
     public static TalonFX armLifter2 = new TalonFX(31);
+
+    public static DigitalInput topLimit = new DigitalInput(0);
+    public static DigitalInput bottomLimit = new DigitalInput(1);
 
     public static double elapsedTime;
 

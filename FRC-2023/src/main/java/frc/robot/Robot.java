@@ -6,6 +6,8 @@ package frc.robot;
 
 import java.util.Arrays;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
@@ -115,6 +117,19 @@ public class Robot extends TimedRobot {
             Map.lightStrip();
         }
 
+        // if (Map.coDriver.getRawButton(6) && !Map.topLimit.get()) {
+        //     Map.armLifter.set(ControlMode.Position, -100000);
+        // } else if (Map.coDriver.getRawButton(5) && !Map.bottomLimit.get()) {
+        //     Map.armLifter.set(ControlMode.Position, 0);
+        //     Map.armLifter.setSelectedSensorPosition(Map.armLifter.getSelectedSensorPosition() + 10);
+        // } 
+        // else {
+        //     Map.armLifter.set(ControlMode.Position, Map.armLifter.getSelectedSensorPosition());
+        // }
+
+        Arm.ArmExtend(Map.coDriver.getRawAxis(2), Map.coDriver.getRawAxis(3));
+        Arm.LiftArm(Map.coDriver.getRawButton(5), Map.coDriver.getRawButton(6));
+
         if (Map.driver.getRawButtonPressed(1)) {
             if (Limelight.pipelineOneOn) {
                 Limelight.pipelineZero();
@@ -127,8 +142,6 @@ public class Robot extends TimedRobot {
 
         Map.linearActuatorLeft.setSpeed(Map.clawPos);
         Map.linearActuatorRight.setSpeed(Map.clawPos);
-
-        Arm.ShowEncoder();
 
         SmartDashboard.putNumber("Intake Pos", Map.clawPos);
         Rollers.roll(Map.driver.getRawAxis(2), Map.driver.getRawAxis(3));
