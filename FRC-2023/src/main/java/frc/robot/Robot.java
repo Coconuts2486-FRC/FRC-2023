@@ -17,6 +17,7 @@ import frc.robot.Auto.ShortTestPaths;
 import frc.robot.Auto.SimpleZigZag;
 import frc.robot.Intake.Arm;
 import frc.robot.Intake.Rollers;
+import frc.robot.Vision.Limelight;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -67,7 +68,7 @@ public class Robot extends TimedRobot {
     public void teleopPeriodic() {
         x = Map.driver.getRawAxis(Map.driverMode[0]) / 3;
         y = Map.driver.getRawAxis(Map.driverMode[1]) / 3;
-        twist = Map.driver.getRawAxis(Map.driverMode[2]) / 2;
+        twist = (Map.driver.getRawAxis(Map.driverMode[2]) / 2) + Limelight.Target();
         joystickAngle = 180 + (Math.atan2(y, -x) / (Math.PI) * 180);
         joystickMag = Math.sqrt(x * x + y * y);
         fieldCenOffset = Map.initialAngle - Map.gyro.getYaw();
@@ -113,6 +114,16 @@ public class Robot extends TimedRobot {
         if (Map.coDriver.getRawButtonPressed(4)) {
             Map.lightStrip();
         }
+
+        if (Map.driver.getRawButtonPressed(1)) {
+            if (Limelight.pipelineOneOn) {
+                Limelight.pipelineZero();
+                Limelight.pipelineOneOn = false;
+            } else {
+                Limelight.pipelineOne();
+                Limelight.pipelineOneOn = true;
+            }
+          }
 
         Map.linearActuatorLeft.setSpeed(Map.clawPos);
         Map.linearActuatorRight.setSpeed(Map.clawPos);
