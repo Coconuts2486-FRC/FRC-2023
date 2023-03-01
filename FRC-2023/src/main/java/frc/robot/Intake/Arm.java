@@ -48,7 +48,7 @@ public class Arm {
 
         //if we are trying to move to the top, the set pos should be 0, otherwise 130,000
         if (top) {
-            setPos = -102000;
+            setPos = -113000;
         } else if (bottom) {
             setPos = 0;
         } else {
