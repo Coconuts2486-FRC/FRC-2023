@@ -19,10 +19,10 @@ public class Rollers {
         if (buttonPress) {
             if (Map.intakePos == 0.4) {
                 Map.intakePos = 0;
-                roll(0, 0);
+                roll(0.9, 0);
             } else {
                 Map.intakePos = 0.4;
-                roll(0.9, 0);
+                roll(0, 0);
             }
         }
 
