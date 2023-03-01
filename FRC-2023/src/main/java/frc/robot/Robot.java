@@ -128,7 +128,7 @@ public class Robot extends TimedRobot {
         // }
 
         Arm.ArmExtend(Map.coDriver.getRawAxis(2), Map.coDriver.getRawAxis(3));
-        Arm.LiftArm(Map.coDriver.getRawButton(5), Map.coDriver.getRawButton(6));
+        Arm.LiftArm(Map.coDriver.getRawButton(6), Map.coDriver.getRawButton(5));
 
         if (Map.driver.getRawButtonPressed(1)) {
             if (Limelight.pipelineOneOn) {
