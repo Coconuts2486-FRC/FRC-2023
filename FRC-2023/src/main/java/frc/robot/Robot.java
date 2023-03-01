@@ -6,17 +6,13 @@ package frc.robot;
 
 import java.util.Arrays;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Auto.Balance;
 import frc.robot.Auto.DriveRoute;
-import frc.robot.Auto.DriveTo;
 import frc.robot.Auto.ShortTestPaths;
-import frc.robot.Auto.SimpleZigZag;
 import frc.robot.Intake.Arm;
 import frc.robot.Intake.Rollers;
 import frc.robot.Vision.Limelight;
@@ -68,69 +64,35 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopPeriodic() {
-        x = Map.driver.getRawAxis(Map.driverMode[0]) / 3;
-        y = Map.driver.getRawAxis(Map.driverMode[1]) / 3;
-        twist = (Map.driver.getRawAxis(Map.driverMode[2]) / 2) + Limelight.Target();
+
+        // get joystick stuff
+        x = Map.driver.getRawAxis(4) / 3;
+        y = Map.driver.getRawAxis(5) / 3;
+        // twist to limelight targets with driver B
+        twist = (Map.driver.getRawAxis(0) / 2) + Limelight.Target(Map.driver.getRawButton(2));
         joystickAngle = 180 + (Math.atan2(y, -x) / (Math.PI) * 180);
         joystickMag = Math.sqrt(x * x + y * y);
         fieldCenOffset = Map.initialAngle - Map.gyro.getYaw();
 
-        if (Map.driver.getPOV() != -1) {
-            DriveTo.goToCoordsPID(0, 0, 1);
-        } else if (Map.driver.getRawButton(1)) {
-            DriveRoute.driveSpeed(SimpleZigZag.path, 3);
-        } else if (Map.driver.getRawButton(5)) {
+        // balance with left bumber otherwise drive
+        if (Map.driver.getRawButton(5)) {
             Balance.balanceRobot();
         } else {
             Map.swerve.swerveDrive(joystickAngle + fieldCenOffset, joystickMag, twist);
             Map.swerve.odometry(fieldCenOffset);
         }
 
-        if (Map.driver.getRawButton(6)) {
+        // zero robot angle and position with driver Y
+        if (Map.driver.getRawButton(4)) {
             Map.initialAngle = Map.gyro.getYaw();
             Map.swerve.xPos = 0;
             Map.swerve.yPos = 0;
             DriveRoute.index = 0;
             ShortTestPaths.onBoard = false;
         }
-        
-		if (Map.coDriver.getRawButtonPressed(1)) {
-            Map.lightStrip();
-        }
-        SmartDashboard.putBoolean("Lights on", Map.lightOn);
 
-        if (Map.coDriver.getRawButtonPressed(2)) {
-            if (Map.intakePos == 0.4) {
-                Map.intakePos = 0;
-            } else {
-                Map.intakePos = 0.4;
-            }
-        }
-
-        Map.intakeServoLeft.set(Map.intakePos - 0.07);
-        Map.intakeServoRight.set((1 - Map.intakePos) + 0.1);
-
-        if (Map.coDriver.getRawButtonPressed(3)) {
-            Map.clawPos = -Map.clawPos;
-        }
-        if (Map.coDriver.getRawButtonPressed(4)) {
-            Map.lightStrip();
-        }
-
-        // if (Map.coDriver.getRawButton(6) && !Map.topLimit.get()) {
-        //     Map.armLifter.set(ControlMode.Position, -100000);
-        // } else if (Map.coDriver.getRawButton(5) && !Map.bottomLimit.get()) {
-        //     Map.armLifter.set(ControlMode.Position, 0);
-        //     Map.armLifter.setSelectedSensorPosition(Map.armLifter.getSelectedSensorPosition() + 10);
-        // } 
-        // else {
-        //     Map.armLifter.set(ControlMode.Position, Map.armLifter.getSelectedSensorPosition());
-        // }
-
-        Arm.ArmExtend(Map.coDriver.getRawAxis(2), Map.coDriver.getRawAxis(3));
-        Arm.LiftArm(Map.coDriver.getRawButton(6), Map.coDriver.getRawButton(5));
-
-        if (Map.driver.getRawButtonPressed(1)) {
+        // light/toggle pipelines with co driver right joystick button
+        if (Map.coDriver.getRawButtonPressed(10)) {
             if (Limelight.pipelineOneOn) {
                 Limelight.pipelineZero();
                 Limelight.pipelineOneOn = false;
@@ -138,13 +100,16 @@ public class Robot extends TimedRobot {
                 Limelight.pipelineOne();
                 Limelight.pipelineOneOn = true;
             }
-          }
+        }
 
-        Map.linearActuatorLeft.setSpeed(Map.clawPos);
-        Map.linearActuatorRight.setSpeed(Map.clawPos);
-
-        SmartDashboard.putNumber("Intake Pos", Map.clawPos);
-        Rollers.roll(Map.driver.getRawAxis(2), Map.driver.getRawAxis(3));
+        // intake extend with driver right bumper
+        Rollers.intakeExtend(Map.driver.getRawButtonPressed(6));
+        // arm extend with co driver triggers
+        Arm.armExtend(Map.coDriver.getRawAxis(2), Map.coDriver.getRawAxis(3));
+        // arm lift with co driver bumpers
+        Arm.liftArm(Map.coDriver.getRawButton(6), Map.coDriver.getRawButton(5));
+        // toggle lights with codriver A
+        Map.lightStrip(Map.coDriver.getRawButtonPressed(8));
 
     }
 

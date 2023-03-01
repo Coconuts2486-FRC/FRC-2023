@@ -15,28 +15,44 @@ public class Map {
 
     /*
      * Driver JOYSTICK buttons and their controls:
-     * (1) A                - Drive temporary auto path
-     * (2) B                - Winch extends arm
-     * (3) X                - Arm goes to top position
-     * (4) Y                - Reverses arm movents: extend -> retract, top -> bottom
+     * Axis ----------
+     * (0) Left X           - Twist
+     * (1) Left Y           -
+     * (2) Left Trigger     -
+     * (3) Right Trigger    -
+     * (4) Right X          - Strafe X
+     * (5) Right Y          - Strafe Y
+     * Buttons -------
+     * (1) A                - Zeroes robot angle and position
+     * (2) B                - Target with limelight
+     * (3) X                - 
+     * (4) Y                - 
      * (5) L Bumper         - Balances robot
-     * (6) R Bumper         - Zeroes odometry and angle
-     * (7) Share            - Nothing
-     * (8) Menu             - Nothing
-     * (9) Left Stick       - Nothing
-     * (10) Right Stick     - Nothing
+     * (6) R Bumper         - Toggle intake out and spin rollers
+     * (7) Share            -
+     * (8) Menu             -
+     * (9) Left Stick       -
+     * (10) Right Stick     -
      * 
      * CODRIVER JOYSTICK buttons and their controls:
-     * (1) A                - Lights toggle
-     * (2) B
-     * (3) X
-     * (4) Y
-     * (5)
-     * (6)
-     * (7)
-     * (8)
-     * (9)
-     * (10)
+     * Axis ----------
+     * (0) Left X           -
+     * (1) Left Y           -
+     * (2) Left Trigger     - Winch in
+     * (3) Right Trigger    - Winch out
+     * (4) Right X          -
+     * (5) Right Y          -
+     * Buttons -------
+     * (1) A                - Detected close
+     * (2) B                - Open claw
+     * (3) X                - Cube close and open
+     * (4) Y                - Cone close and open
+     * (5) L Bumper         - Arm bottom
+     * (6) R Bumper         - Arm top
+     * (7) Back             -
+     * (8) Start            - Red & Blue lights toggle
+     * (9) Left Stick       -
+     * (10) Right Stick     - Toggle pipeline/limelight light
      */
 
     public static double deadband = 0.1;
@@ -75,10 +91,12 @@ public class Map {
     public static int[] kateMode = {4, 5, 0};
 
     // function for changing the color of the lights
-    public static void lightStrip() {
-        // switch the color and change the variable
-        pdp.setSwitchableChannel(Map.lightOn);
-        SmartDashboard.putBoolean("Switchable Channel", pdp.getSwitchableChannel());
-        lightOn = !lightOn;
+    public static void lightStrip(boolean buttonPress) {
+        if (buttonPress) {
+            // switch the color and change the variable
+            pdp.setSwitchableChannel(Map.lightOn);
+            SmartDashboard.putBoolean("Switchable Channel", pdp.getSwitchableChannel());
+            lightOn = !lightOn;
+        }
     }
 }
