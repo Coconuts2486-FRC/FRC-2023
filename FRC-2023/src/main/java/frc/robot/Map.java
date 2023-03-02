@@ -23,13 +23,13 @@ public class Map {
      * (4) Right X          - Strafe X
      * (5) Right Y          - Strafe Y
      * Buttons -------
-     * (1) A                - Zeroes robot angle and position
+     * (1) A                - 
      * (2) B                - Target with limelight
-     * (3) X                - 
-     * (4) Y                - 
+     * (3) X                - Zeroes robot angle and position
+     * (4) Y                - Outtake
      * (5) L Bumper         - Balances robot
      * (6) R Bumper         - Toggle intake out and spin rollers
-     * (7) Share            -
+     * (7) Share            - Coast/Brake toggle for arm
      * (8) Menu             -
      * (9) Left Stick       -
      * (10) Right Stick     -
@@ -49,9 +49,9 @@ public class Map {
      * (4) Y                - Cone close and open
      * (5) L Bumper         - Arm bottom
      * (6) R Bumper         - Arm top
-     * (7) Back             -
+     * (7) Back             - Override arm down
      * (8) Start            - Red & Blue lights toggle
-     * (9) Left Stick       -
+     * (9) Left Stick       - Zero extension
      * (10) Right Stick     - Toggle pipeline/limelight light
      */
 
@@ -72,14 +72,14 @@ public class Map {
 
     public static Servo linearActuatorLeft = new Servo(0);
     public static Servo linearActuatorRight = new Servo(1);
-    public static double intakePos = 0.4;
     public static Servo intakeServoLeft = new Servo(2);
     public static Servo intakeServoRight = new Servo(3);
-    public static double clawPos = 1;
+    public static double intakePos = 0.4;
 
     public static TalonSRX winch = new TalonSRX(32);
     public static TalonFX armLifter = new TalonFX(30);
     public static TalonFX armLifter2 = new TalonFX(31);
+    public static boolean armIsBroke = true;
 
     public static DigitalInput topLimit = new DigitalInput(0);
     public static DigitalInput bottomLimit = new DigitalInput(1);

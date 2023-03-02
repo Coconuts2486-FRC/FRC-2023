@@ -12,7 +12,7 @@ public class Limelight {
     public static NetworkTableEntry ty = table.getEntry("ty");
     public static NetworkTableEntry ta = table.getEntry("ta");
 
-    public static PIDController vPid = new PIDController(0.0000000000001, 0, -.0001);
+    public static PIDController vPid = new PIDController(0.0000001, 0, 0);
    
     public static double xOffset;
     public static boolean pipelineOneOn = false; 
@@ -50,7 +50,7 @@ public class Limelight {
             xOffset = 0;
         }
         
-        return (xOffset/70)+vPid.calculate(xOffset);
+        return (xOffset/60)+vPid.calculate(xOffset);
 
     }
 }
