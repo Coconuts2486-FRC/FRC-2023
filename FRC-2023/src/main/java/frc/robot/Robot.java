@@ -7,6 +7,7 @@ package frc.robot;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import frc.robot.Auto.Balance;
+import frc.robot.Auto.ClawAutoTest;
 import frc.robot.Auto.DriveRoute;
 import frc.robot.Auto.ShortTestPaths;
 import frc.robot.Intake.Arm;
@@ -40,6 +41,8 @@ public class Robot extends TimedRobot {
         Arm.initialize();
 
         CameraServer.startAutomaticCapture();
+
+        //Arm.clawOpen(false, true, false, false);
     }
 
     @Override
@@ -48,11 +51,14 @@ public class Robot extends TimedRobot {
     @Override
     public void autonomousInit() {
         Map.elapsedTime = 0;
-        Arm.armExtend(0, 0, true, false, false);
+        ClawAutoTest.action = 0;
+        // Arm.armExtend(0, 0, true, false, false);
     }
 
     @Override
-    public void autonomousPeriodic() {}
+    public void autonomousPeriodic() {
+        ClawAutoTest.clawAuto();
+    }
 
     @Override
     public void teleopInit() {
