@@ -38,7 +38,7 @@ public class Arm {
     }
 
     //extend the arm or retract the arm - NO LIMITS CURRENTLY -
-    public static void armExtend(double in, double out, boolean low, boolean mid, boolean high) {
+    public static double armExtend(double in, double out, boolean low, boolean mid, boolean high) {
 
         currExtension = Map.winch.getSelectedSensorPosition();
 
@@ -60,10 +60,12 @@ public class Arm {
 
         SmartDashboard.putNumber("Extension value", currExtension);
         SmartDashboard.putNumber("PID value", extensionPID.calculate(extendedHigh - currExtension));
+
+        return extensionPID.calculate(extendedHigh - currExtension);
     }
 
     //move the arm either to the top or bottom
-    public static void liftArm(boolean top, boolean bottom, boolean override) {
+    public static double liftArm(boolean top, boolean bottom, boolean override) {
 
         currPos = Map.armLifter.getSelectedSensorPosition();
         SmartDashboard.putNumber("Arm ticks angle", currPos);
@@ -102,6 +104,8 @@ public class Arm {
         } else if (override && Map.bottomLimit.get()) {
             Map.armLifter.set(ControlMode.PercentOutput, 0);
         }
+
+        return armSpeed;
 
     }
     
