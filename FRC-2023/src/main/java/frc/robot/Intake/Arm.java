@@ -16,8 +16,8 @@ public class Arm {
     public static double setPos;
 
     public static double extendedLow = 0;
-    public static double extendedMid = -7700;
-    public static double extendedHigh = -34900;
+    public static double extendedMid = -6000;
+    public static double extendedHigh = -29000;
     public static double extendedLast;
     public static double currExtension;
 
@@ -35,6 +35,8 @@ public class Arm {
 
         Map.linearActuatorLeft.setBounds(1.75, 1.7, 1.355, 1.05, 1.0);
         Map.linearActuatorRight.setBounds(1.75, 1.7, 1.355, 1.05, 1.0);
+
+        Map.winch.setSelectedSensorPosition(0);
     }
 
     //extend the arm or retract the arm - NO LIMITS CURRENTLY -
@@ -42,8 +44,11 @@ public class Arm {
 
         currExtension = Map.winch.getSelectedSensorPosition();
 
-        if ((in > 0.1 || out > 0.1)) {
-            Map.winch.set(ControlMode.PercentOutput, (in - 0.1) - (out - 0.1));
+        if (in > 0.1 && !Map.extensionLimit.get()) {
+            Map.winch.set(ControlMode.PercentOutput, in - 0.1);
+            extendedLast = currExtension;
+        } else if (out > 0.1) {
+            Map.winch.set(ControlMode.PercentOutput, -(out - 0.1));
             extendedLast = currExtension;
         } else if (low) {
             Map.winch.set(ControlMode.PercentOutput, extensionPID.calculate(currExtension - extendedLow));
@@ -60,6 +65,11 @@ public class Arm {
 
         SmartDashboard.putNumber("Extension value", currExtension);
         SmartDashboard.putNumber("PID value", extensionPID.calculate(extendedHigh - currExtension));
+
+        if (Map.extensionLimit.get()) {
+            Map.winch.setSelectedSensorPosition(0);
+            extendedLast = 0;
+        }
 
         return extensionPID.calculate(extendedHigh - currExtension);
     }
@@ -97,13 +107,16 @@ public class Arm {
 
         if (Map.bottomLimit.get()) {
             Map.armLifter.setSelectedSensorPosition(0);
+            Arm.clawOpen(false, false, false, true);
         }
 
         if (override && !Map.bottomLimit.get()) {
-            Map.armLifter.set(ControlMode.PercentOutput, 0.1);
+            Map.armLifter.set(ControlMode.PercentOutput, 0.2);
         } else if (override && Map.bottomLimit.get()) {
             Map.armLifter.set(ControlMode.PercentOutput, 0);
         }
+
+        SmartDashboard.putNumber("armSpeed", armSpeed);
 
         return armSpeed;
 
@@ -111,6 +124,8 @@ public class Arm {
     
     public static void clawOpen(boolean cubePress, boolean conePress, boolean closeDetected, boolean open) {
         if (open) {
+            Map.linearActuatorLeft.setBounds(1.75, 1.7, 1.355, 1.05, 1.0);
+            Map.linearActuatorRight.setBounds(1.75, 1.7, 1.355, 1.05, 1.0);
             Map.linearActuatorLeft.setSpeed(0);
             Map.linearActuatorRight.setSpeed(0);
             return;
@@ -153,6 +168,6 @@ public class Arm {
             }
         }
 
-        SmartDashboard.putBoolean("Brake/Coast", Map.armIsBroke);
+        SmartDashboard.putBoolean("Brake", Map.armIsBroke);
     }
 }

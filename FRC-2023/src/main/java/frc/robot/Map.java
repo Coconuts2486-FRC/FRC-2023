@@ -8,7 +8,6 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.Servo;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Drive.Swerve;
 
 public class Map {
@@ -23,7 +22,7 @@ public class Map {
      * (4) Right X          - Strafe X
      * (5) Right Y          - Strafe Y
      * Buttons -------
-     * (1) A                - 
+     * (1) A                - Rollers out/in
      * (2) B                - Target with limelight
      * (3) X                - Zeroes robot angle and position
      * (4) Y                - Outtake
@@ -83,6 +82,7 @@ public class Map {
 
     public static DigitalInput topLimit = new DigitalInput(0);
     public static DigitalInput bottomLimit = new DigitalInput(1);
+    public static DigitalInput extensionLimit = new DigitalInput(2);
 
     public static double elapsedTime;
 
@@ -91,7 +91,6 @@ public class Map {
         if (buttonPress) {
             // switch the color and change the variable
             pdp.setSwitchableChannel(Map.lightOn);
-            SmartDashboard.putBoolean("Switchable Channel", pdp.getSwitchableChannel());
             lightOn = !lightOn;
         }
     }

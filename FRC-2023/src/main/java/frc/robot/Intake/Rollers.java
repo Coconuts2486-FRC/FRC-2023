@@ -15,7 +15,7 @@ public class Rollers {
         intakeMotor2.set(VictorSPXControlMode.PercentOutput, -(in - out));
     }
 
-    public static void intakeExtend(boolean buttonPress, boolean outtake) {
+    public static void intakeExtend(boolean buttonPress, boolean outtake, boolean onlyOut) {
         if (buttonPress) {
             if (Map.intakePos == 0.4) {
                 Map.intakePos = 0;
@@ -29,7 +29,27 @@ public class Rollers {
                 roll(0, 0);
             }
         } else if (outtake) {
-            roll(0, 0.5);
+            if (Map.intakePos == 0.4) {
+                Map.intakePos = 0;
+                Map.intakeServoLeft.set(Map.intakePos - 0.07);
+                Map.intakeServoRight.set((1 - Map.intakePos) + 0.1);
+                roll(0, 0.5);
+            } else {
+                Map.intakePos = 0.4;
+                Map.intakeServoLeft.set(Map.intakePos - 0.07);
+                Map.intakeServoRight.set((1 - Map.intakePos) + 0.1);
+                roll(0, 0);
+            }
+        } else if (onlyOut) {
+            if (Map.intakePos == 0.4) {
+                Map.intakePos = 0;
+                Map.intakeServoLeft.set(Map.intakePos - 0.07);
+                Map.intakeServoRight.set((1 - Map.intakePos) + 0.1);
+            } else {
+                Map.intakePos = 0.4;
+                Map.intakeServoLeft.set(Map.intakePos - 0.07);
+                Map.intakeServoRight.set((1 - Map.intakePos) + 0.1);
+            }
         } else if (Map.intakePos == 0.4) {
             roll(0, 0);
         }

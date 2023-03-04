@@ -20,7 +20,7 @@ public class ClawAutoTest {
                 savedTime = Timer.getFPGATimestamp();
             }
         } else if (action == 2) {
-            Rollers.intakeExtend(true, false);
+            // Rollers.intakeExtend(true, false);
             action += 1;
             savedTime = Timer.getFPGATimestamp();
         } else if (action == 3) {
@@ -28,7 +28,7 @@ public class ClawAutoTest {
                 action += 1;
             }
         } else if (action == 4) {
-            Rollers.intakeExtend(true, false);
+            // Rollers.intakeExtend(true, false);
             action += 1;
             savedTime = Timer.getFPGATimestamp();
         } else if (action == 5) {
