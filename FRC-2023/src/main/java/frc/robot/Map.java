@@ -1,13 +1,16 @@
 package frc.robot;
 
-import com.ctre.phoenix.motorcontrol.can.TalonFX;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+// import com.ctre.phoenix.motorcontrol.can.TalonFX;
+//import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.sensors.Pigeon2;
 
-import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Compressor;
+// import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.PowerDistribution;
-import edu.wpi.first.wpilibj.Servo;
+// import edu.wpi.first.wpilibj.Servo;
+import edu.wpi.first.wpilibj.Solenoid;
 import frc.robot.Drive.Swerve;
 
 public class Map {
@@ -69,20 +72,27 @@ public class Map {
     public static Pigeon2 gyro = new Pigeon2(40);
     public static double initialAngle;
 
-    public static Servo linearActuatorLeft = new Servo(0);
-    public static Servo linearActuatorRight = new Servo(1);
-    public static Servo intakeServoLeft = new Servo(2);
-    public static Servo intakeServoRight = new Servo(3);
-    public static double intakePos = 0.4;
+    // public static Servo linearActuatorLeft = new Servo(0);
+    // public static Servo linearActuatorRight = new Servo(1);
+    // public static Servo intakeServoLeft = new Servo(2);
+    // public static Servo intakeServoRight = new Servo(3);
+    // public static double intakePos = 0.4;
 
-    public static TalonSRX winch = new TalonSRX(32);
-    public static TalonFX armLifter = new TalonFX(30);
-    public static TalonFX armLifter2 = new TalonFX(31);
-    public static boolean armIsBroke = true;
+    // public static TalonSRX winch = new TalonSRX(32);
+    // public static TalonFX armLifter = new TalonFX(30);
+    // public static TalonFX armLifter2 = new TalonFX(31);
+    // public static boolean armIsBroke = true;
 
-    public static DigitalInput topLimit = new DigitalInput(0);
-    public static DigitalInput bottomLimit = new DigitalInput(1);
-    public static DigitalInput extensionLimit = new DigitalInput(2);
+    // public static DigitalInput topLimit = new DigitalInput(0);
+    // public static DigitalInput bottomLimit = new DigitalInput(1);
+    // public static DigitalInput extensionLimit = new DigitalInput(2);
+
+    public static Compressor pcmCompressor = new Compressor(PneumaticsModuleType.REVPH);
+    public static boolean pressureSwitch = pcmCompressor.getPressureSwitchValue();
+    public static Solenoid armLiftSolenoid = new Solenoid(PneumaticsModuleType.REVPH, 13);
+    public static Solenoid intakeSolenoid = new Solenoid(PneumaticsModuleType.REVPH, 14);
+    public static Solenoid extendSolenoid = new Solenoid(PneumaticsModuleType.REVPH, 15);
+
 
     public static double elapsedTime;
 

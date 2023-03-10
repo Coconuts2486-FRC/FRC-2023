@@ -3,7 +3,7 @@ package frc.robot.Intake;
 import com.ctre.phoenix.motorcontrol.VictorSPXControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
-import frc.robot.Map;
+// import frc.robot.Map;
 
 public class Rollers {
 
@@ -16,42 +16,6 @@ public class Rollers {
     }
 
     public static void intakeExtend(boolean buttonPress, boolean outtake, boolean onlyOut) {
-        if (buttonPress) {
-            if (Map.intakePos == 0.4) {
-                Map.intakePos = 0;
-                Map.intakeServoLeft.set(Map.intakePos - 0.07);
-                Map.intakeServoRight.set((1 - Map.intakePos) + 0.1);
-                roll(0.9, 0);
-            } else {
-                Map.intakePos = 0.4;
-                Map.intakeServoLeft.set(Map.intakePos - 0.07);
-                Map.intakeServoRight.set((1 - Map.intakePos) + 0.1);
-                roll(0, 0);
-            }
-        } else if (outtake) {
-            if (Map.intakePos == 0.4) {
-                Map.intakePos = 0;
-                Map.intakeServoLeft.set(Map.intakePos - 0.07);
-                Map.intakeServoRight.set((1 - Map.intakePos) + 0.1);
-                roll(0, 0.5);
-            } else {
-                Map.intakePos = 0.4;
-                Map.intakeServoLeft.set(Map.intakePos - 0.07);
-                Map.intakeServoRight.set((1 - Map.intakePos) + 0.1);
-                roll(0, 0);
-            }
-        } else if (onlyOut) {
-            if (Map.intakePos == 0.4) {
-                Map.intakePos = 0;
-                Map.intakeServoLeft.set(Map.intakePos - 0.07);
-                Map.intakeServoRight.set((1 - Map.intakePos) + 0.1);
-            } else {
-                Map.intakePos = 0.4;
-                Map.intakeServoLeft.set(Map.intakePos - 0.07);
-                Map.intakeServoRight.set((1 - Map.intakePos) + 0.1);
-            }
-        } else if (Map.intakePos == 0.4) {
-            roll(0, 0);
-        }
+       //
     }
 }
