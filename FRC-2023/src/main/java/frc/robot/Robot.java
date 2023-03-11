@@ -86,9 +86,11 @@ public class Robot extends TimedRobot {
         fieldCenOffset = Map.initialAngle - Map.gyro.getYaw();
 
         // balance with left bumber otherwise drive
-        if (Map.coDriver.getRawButton(1)) {
-            DriveRoute.driveSpeed(SimpleZigZag.path1, 2, SimpleZigZag.path1Speed);
-        } else if (Map.driver.getRawButton(5)) {
+        // if (Map.coDriver.getRawButton(1)) {
+        //     DriveRoute.driveSpeed(SimpleZigZag.path1, 2, SimpleZigZag.path1Speed);
+        // } else 
+        
+        if (Map.driver.getRawButton(5)) {
             Balance.balanceRobot();
         } else {
             Map.swerve.swerveDrive(joystickAngle + fieldCenOffset, joystickMag, twist);

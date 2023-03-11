@@ -18,9 +18,6 @@ public class DriveRoute {
     public static void drivePID(double[][] path, double cutoff) {
         if (DriveTo.goToCoordsPID(path[index][0], path[index][1], cutoff)) {
             index = index + 1;
-            if (index == path.length) {
-                index = 0;
-            }
         }
         SmartDashboard.putNumber("target x", path[index][0]);
         SmartDashboard.putNumber("target y", path[index][1]);
@@ -39,9 +36,6 @@ public class DriveRoute {
 
         if (DriveTo.goToCoordsSpeed(path[index][0], path[index][1], cutoff, speedAuto, path.length, speedVariable)) {
             index = index + 1;
-            if (index == path.length) {
-                index = 0;
-            }
         }
         SmartDashboard.putNumber("target x", path[index][0]);
         SmartDashboard.putNumber("target y", path[index][1]);
