@@ -54,6 +54,8 @@ public class Swerve {
                 twist = 0;
                 // twist = (straightAngle - Map.gyro.getYaw()) / -120;
             }
+
+            SmartDashboard.putNumber("Speed in swerve", speed);
             
             this.wheelFR.drive(angle, speed, twist, cycleTime);
             this.wheelFL.drive(angle, speed, twist, cycleTime);

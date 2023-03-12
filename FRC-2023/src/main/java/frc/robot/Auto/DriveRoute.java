@@ -1,7 +1,6 @@
 package frc.robot.Auto;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.Map;
 
 public class DriveRoute {
 
@@ -28,17 +27,17 @@ public class DriveRoute {
     }
 
     //drive the ZigZag path using a PID to go to each point along the curve
-    public static void driveSpeed(double[][] path, double cutoff) {
+    public static void driveSpeed(double[][] path, double cutoff, int speedVariable) {
         speedAuto = 0;
         for (int i = -3; i < 5; i++) {
             if (index + i > 0 && index + i + 1 < path.length) {
                 speedAuto += distBetweeenPoints(path[index + i], path[index + i + 1]);
             }
         }
-         
-        speedAuto = speedAuto / (2400 / Map.ticksToInches);
 
-        if (DriveTo.goToCoordsSpeed(path[index][0], path[index][1], cutoff, speedAuto)) {
+        SmartDashboard.putNumber("Speed auto before", speedAuto);
+
+        if (DriveTo.goToCoordsSpeed(path[index][0], path[index][1], cutoff, speedAuto, path.length, speedVariable)) {
             index = index + 1;
             if (index == path.length) {
                 index = 0;

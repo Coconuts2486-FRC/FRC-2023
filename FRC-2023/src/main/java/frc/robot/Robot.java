@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 import frc.robot.Auto.Balance;
 import frc.robot.Auto.DriveRoute;
+import frc.robot.Auto.SimpleZigZag;
 import frc.robot.Intake.PneumaticArm;
 import frc.robot.Intake.Rollers;
 import frc.robot.Vision.Limelight;
@@ -85,7 +86,9 @@ public class Robot extends TimedRobot {
         fieldCenOffset = Map.initialAngle - Map.gyro.getYaw();
 
         // balance with left bumber otherwise drive
-        if (Map.driver.getRawButton(5)) {
+        if (Map.coDriver.getRawButton(1)) {
+            DriveRoute.driveSpeed(SimpleZigZag.path1, 2, SimpleZigZag.path1Speed);
+        } else if (Map.driver.getRawButton(5)) {
             Balance.balanceRobot();
         } else {
             Map.swerve.swerveDrive(joystickAngle + fieldCenOffset, joystickMag, twist);

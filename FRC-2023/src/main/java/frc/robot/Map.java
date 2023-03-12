@@ -45,7 +45,7 @@ public class Map {
      * (4) Right X          -
      * (5) Right Y          -
      * Buttons -------
-     * (1) A                - 
+     * (1) A                - Drive auto path
      * (2) B                - 
      * (3) X                - 
      * (4) Y                - 
