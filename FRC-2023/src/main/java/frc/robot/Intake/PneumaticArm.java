@@ -15,32 +15,17 @@ public class PneumaticArm {
     }
 
     public static void liftArm(boolean lift) {
-
         if (lift) {
-
-            if (!armPistonActive) {
-                Map.armLiftSolenoid.set(true);
-                armPistonActive = true;
-            } else {
-                Map.armLiftSolenoid.set(false);
-                armPistonActive = false;
-            }
-
+            armPistonActive = !armPistonActive;
+            Map.armLiftSolenoid.set(armPistonActive);
         }
 
     }
 
     public static void intakeExtend(boolean intake) {
-
         if (intake) {
-            if (!intakePistonActive) {
-                Map.intakeSolenoid.set(true);
-                intakePistonActive = true;
-            } else {
-                Map.intakeSolenoid.set(false);
-                intakePistonActive = false;
-            }
-
+            intakePistonActive = !intakePistonActive;
+            Map.intakeSolenoid.set(intakePistonActive);
         }
 
     }

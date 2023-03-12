@@ -20,8 +20,8 @@ public class Map {
      * Axis ----------
      * (0) Left X           - Twist
      * (1) Left Y           -
-     * (2) Left Trigger     -
-     * (3) Right Trigger    -
+     * (2) Left Trigger     - Roll intake in
+     * (3) Right Trigger    - Roll intake out
      * (4) Right X          - Strafe X
      * (5) Right Y          - Strafe Y
      * Buttons -------

@@ -40,7 +40,7 @@ public class Robot extends TimedRobot {
     @Override
     public void robotInit() {
         Map.initialAngle = Map.gyro.getYaw();
-        // Arm.initialize();
+        Rollers.initialize();
 
         CameraServer.startAutomaticCapture();
 
@@ -129,7 +129,8 @@ public class Robot extends TimedRobot {
         // // Arm.clawOpen(cubePress, conePress, closeDetected, open);
 
         // intake extend with driver right bumper
-        Rollers.intakeExtend(Map.driver.getRawButtonPressed(6), Map.driver.getRawButtonPressed(4), Map.driver.getRawButtonPressed(1));
+        Rollers.roll(Map.driver.getRawAxis(2), Map.driver.getRawAxis(3));
+        // Rollers.intakeExtend(Map.driver.getRawButtonPressed(6), Map.driver.getRawButtonPressed(4), Map.driver.getRawButtonPressed(1));
         // arm extend with co driver triggers
         // boolean low = Map.coDriver.getPOV() == 180;
         // boolean mid = Map.coDriver.getPOV() == 90 || Map.coDriver.getPOV() == 270;
