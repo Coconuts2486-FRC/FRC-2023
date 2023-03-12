@@ -31,7 +31,7 @@ public class Map {
      * (4) Y                - Outtake
      * (5) L Bumper         - Balances robot
      * (6) R Bumper         - Toggle intake out and spin rollers
-     * (7) Share            - Coast/Brake toggle for arm
+     * (7) Share            - 
      * (8) Menu             -
      * (9) Left Stick       -
      * (10) Right Stick     -
@@ -40,20 +40,20 @@ public class Map {
      * Axis ----------
      * (0) Left X           -
      * (1) Left Y           -
-     * (2) Left Trigger     - Winch in
-     * (3) Right Trigger    - Winch out
+     * (2) Left Trigger     - Arm intake in
+     * (3) Right Trigger    - Arm intake out
      * (4) Right X          -
      * (5) Right Y          -
      * Buttons -------
-     * (1) A                - Detected close
-     * (2) B                - Open claw
-     * (3) X                - Cube close and open
-     * (4) Y                - Cone close and open
-     * (5) L Bumper         - Arm bottom
-     * (6) R Bumper         - Arm top
-     * (7) Back             - Override arm down
+     * (1) A                - 
+     * (2) B                - 
+     * (3) X                - 
+     * (4) Y                - 
+     * (5) L Bumper         - Lift arm toggle
+     * (6) R Bumper         - Arm extended toggle
+     * (7) Back             - 
      * (8) Start            - Red & Blue lights toggle
-     * (9) Left Stick       - Zero extension
+     * (9) Left Stick       - 
      * (10) Right Stick     - Toggle pipeline/limelight light
      */
 

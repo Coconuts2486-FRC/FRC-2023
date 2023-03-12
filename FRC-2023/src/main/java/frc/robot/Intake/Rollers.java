@@ -3,8 +3,6 @@ package frc.robot.Intake;
 import com.ctre.phoenix.motorcontrol.VictorSPXControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
-// import frc.robot.Map;
-
 public class Rollers {
 
     public static VictorSPX intakeMotor1 = new VictorSPX(20);

@@ -9,7 +9,6 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 import frc.robot.Auto.Balance;
 import frc.robot.Auto.DriveRoute;
-import frc.robot.Auto.ShortTestPaths;
 import frc.robot.Intake.PneumaticArm;
 import frc.robot.Intake.Rollers;
 import frc.robot.Vision.Limelight;
@@ -44,7 +43,6 @@ public class Robot extends TimedRobot {
 
         CameraServer.startAutomaticCapture();
 
-        // Arm.extendedLast = Map.winch.getSelectedSensorPosition();
         Map.lightStrip(true);
         blinkTime = Timer.getFPGATimestamp();
         while ((Timer.getFPGATimestamp() - blinkTime) < 1) {
@@ -100,7 +98,6 @@ public class Robot extends TimedRobot {
             Map.swerve.xPos = 0;
             Map.swerve.yPos = 0;
             DriveRoute.index = 0;
-            ShortTestPaths.onBoard = false;
         }
 
         // light/toggle pipelines with co driver right joystick button
@@ -118,36 +115,11 @@ public class Robot extends TimedRobot {
         PneumaticArm.armExtend(Map.coDriver.getRawButtonPressed(6));
         PneumaticArm.intakeExtend(Map.driver.getRawButtonPressed(1));
 
-
-
-
-        // claw open and close to cube and cone and detected from color sensor
-        // boolean cubePress = Map.coDriver.getRawButtonPressed(3);
-        // boolean conePress = Map.coDriver.getRawButtonPressed(4);
-        // boolean closeDetected = Map.coDriver.getRawButtonPressed(1);
-        // boolean open = Map.coDriver.getRawButtonPressed(2);
-        // // Arm.clawOpen(cubePress, conePress, closeDetected, open);
-
         // intake extend with driver right bumper
         Rollers.roll(Map.driver.getRawAxis(2), Map.driver.getRawAxis(3));
-        // Rollers.intakeExtend(Map.driver.getRawButtonPressed(6), Map.driver.getRawButtonPressed(4), Map.driver.getRawButtonPressed(1));
-        // arm extend with co driver triggers
-        // boolean low = Map.coDriver.getPOV() == 180;
-        // boolean mid = Map.coDriver.getPOV() == 90 || Map.coDriver.getPOV() == 270;
-        // boolean high = Map.coDriver.getPOV() == 0;
-        // Arm.armExtend(Map.coDriver.getRawAxis(2), Map.coDriver.getRawAxis(3), low, mid, high);
-        // arm lift with co driver bumpers
-        // Arm.liftArm(Map.coDriver.getRawButton(6), Map.coDriver.getRawButton(5), Map.coDriver.getRawButton(7));
         // toggle lights with codriver A
         Map.lightStrip(Map.coDriver.getRawButtonPressed(8));
-        // toggle brake/coast
-        // Arm.toggleBrake(Map.driver.getRawButtonPressed(7));
 
-        //if (Map.coDriver.getRawButton(9)) {
-           // Map.winch.setSelectedSensorPosition(0);
-            // Arm.extendedLast = 0;
-            
-        // }
     }
 
     @Override
