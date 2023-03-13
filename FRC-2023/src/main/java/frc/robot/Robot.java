@@ -7,9 +7,11 @@ package frc.robot;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
-import frc.robot.Auto.Balance;
 import frc.robot.Auto.DriveRoute;
 import frc.robot.Auto.SimpleZigZag;
+import frc.robot.Auto.AutoActions.Balance;
+import frc.robot.Auto.AutoPaths.ConeBalanceCube;
+import frc.robot.Intake.ClawRollers;
 import frc.robot.Intake.PneumaticArm;
 import frc.robot.Intake.Rollers;
 import frc.robot.Vision.Limelight;
@@ -58,13 +60,11 @@ public class Robot extends TimedRobot {
     @Override
     public void autonomousInit() {
         Map.elapsedTime = 0;
-        // OneConeBalance.action = 0;
-        // OneConeBalance.savedTime = Timer.getFPGATimestamp();
     }
 
     @Override
     public void autonomousPeriodic() {
-        // OneConeBalance.driveRoute();
+        ConeBalanceCube.placeConeMid();
     }
 
     @Override
@@ -118,8 +118,10 @@ public class Robot extends TimedRobot {
         PneumaticArm.armExtend(Map.coDriver.getRawButtonPressed(6));
         PneumaticArm.intakeExtend(Map.driver.getRawButtonPressed(1));
 
-        // intake extend with driver right bumper
-        Rollers.roll(Map.driver.getRawAxis(2), Map.driver.getRawAxis(3));
+        // intake with driver right bumper
+        Rollers.roll(Map.driver.getRawAxis(2) * 0.6, Map.driver.getRawAxis(3));
+        // claw intake with coDriver right bumper
+        ClawRollers.roll(Map.coDriver.getRawAxis(2), Map.coDriver.getRawAxis(3));
         // toggle lights with codriver A
         Map.lightStrip(Map.coDriver.getRawButtonPressed(8));
 

@@ -1,4 +1,4 @@
-package frc.robot.Auto;
+package frc.robot.Auto.AutoActions;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Map;
