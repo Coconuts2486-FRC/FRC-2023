@@ -6,9 +6,8 @@ package frc.robot;
 
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.Timer;
 import frc.robot.Auto.DriveRoute;
-import frc.robot.Auto.SimpleZigZag;
+import frc.robot.Auto.AutoActions.Auto;
 import frc.robot.Auto.AutoActions.Balance;
 import frc.robot.Auto.AutoPaths.ConeBalanceCube;
 import frc.robot.Intake.ClawRollers;
@@ -34,7 +33,6 @@ public class Robot extends TimedRobot {
     double joystickAngle;
     double joystickMag;
     double fieldCenOffset;
-    double blinkTime;
 
     double[] balance_drive = {0, 0};
 
@@ -43,15 +41,11 @@ public class Robot extends TimedRobot {
     public void robotInit() {
         Map.initialAngle = Map.gyro.getYaw();
         Rollers.initialize();
-
+        ClawRollers.initialize();
         CameraServer.startAutomaticCapture();
-
         Map.lightStrip(true);
-        blinkTime = Timer.getFPGATimestamp();
-        while ((Timer.getFPGATimestamp() - blinkTime) < 1) {
-            // do nothing
-        }
-        Map.lightStrip(true);
+        Auto.initChooser();
+        
     }
 
     @Override
@@ -60,11 +54,12 @@ public class Robot extends TimedRobot {
     @Override
     public void autonomousInit() {
         Map.elapsedTime = 0;
+        ConeBalanceCube.action = 0;
     }
 
     @Override
     public void autonomousPeriodic() {
-        ConeBalanceCube.placeConeMid();
+        Auto.runSelectedAuto();
     }
 
     @Override
@@ -77,10 +72,10 @@ public class Robot extends TimedRobot {
     public void teleopPeriodic() {
 
         // get joystick stuff
-        x = Map.driver.getRawAxis(4) * 0.6;
-        y = Map.driver.getRawAxis(5) * 0.6;
+        x = Map.driver.getRawAxis(4);
+        y = Map.driver.getRawAxis(5);
         // twist to limelight targets with driver B
-        twist = (Map.driver.getRawAxis(0) * 0.5) + Limelight.Target(Map.driver.getRawButton(2));
+        twist = (Map.driver.getRawAxis(0) * 0.6) + Limelight.Target(Map.driver.getRawButton(2));
         joystickAngle = 180 + (Math.atan2(y, -x) / (Math.PI) * 180);
         joystickMag = Math.sqrt(x * x + y * y);
         fieldCenOffset = Map.initialAngle - Map.gyro.getYaw();
@@ -116,12 +111,12 @@ public class Robot extends TimedRobot {
             }
         }
 
-        PneumaticArm.liftArm(Map.coDriver.getRawButtonPressed(5));
-        PneumaticArm.armExtend(Map.coDriver.getRawButtonPressed(6));
-        PneumaticArm.intakeExtend(Map.driver.getRawButtonPressed(1));
+        PneumaticArm.liftArm(Map.coDriver.getRawButtonPressed(6));
+        PneumaticArm.armExtend(Map.coDriver.getRawButtonPressed(5));
+        PneumaticArm.intakeExtend(Map.driver.getRawButtonPressed(6));
 
         // intake with driver right bumper
-        Rollers.roll(Map.driver.getRawAxis(2) * 0.6, Map.driver.getRawAxis(3));
+        Rollers.roll(Map.driver.getRawAxis(3) * 0.6, Map.driver.getRawAxis(2));
         // claw intake with coDriver right bumper
         ClawRollers.roll(Map.coDriver.getRawAxis(2), Map.coDriver.getRawAxis(3));
         // toggle lights with codriver A
@@ -130,7 +125,11 @@ public class Robot extends TimedRobot {
     }
 
     @Override
-    public void disabledInit() {}
+    public void disabledInit() {
+        PneumaticArm.armPistonActive = false;
+        PneumaticArm.intakePistonActive = false;
+        PneumaticArm.extendPistonActive = false;
+    }
 
     @Override
     public void disabledPeriodic() {}

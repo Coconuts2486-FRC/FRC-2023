@@ -24,7 +24,7 @@ public class DriveRoute {
     }
 
     //drive the ZigZag path using a PID to go to each point along the curve
-    public static void driveSpeed(double[][] path, double cutoff, int speedVariable) {
+    public static boolean driveSpeed(double[][] path, double cutoff, int speedVariable, int positive) {
         speedAuto = 0;
         for (int i = -3; i < 5; i++) {
             if (index + i > 0 && index + i + 1 < path.length) {
@@ -34,11 +34,16 @@ public class DriveRoute {
 
         SmartDashboard.putNumber("Speed auto before", speedAuto);
 
-        if (DriveTo.goToCoordsSpeed(path[index][0], path[index][1], cutoff, speedAuto, path.length, speedVariable)) {
+        if (DriveTo.goToCoordsSpeed(path[index][0], path[index][1] * positive, cutoff, speedAuto, path.length, speedVariable)) {
             index = index + 1;
+            if (index == path.length - 1) {
+                return true;
+            }
         }
         SmartDashboard.putNumber("target x", path[index][0]);
-        SmartDashboard.putNumber("target y", path[index][1]);
+        SmartDashboard.putNumber("target y", path[index][1] * positive);
+
+        return false;
     }
 
 }

@@ -55,7 +55,7 @@ public class GeneralAutoTimedActions {
             startTime = Timer.getFPGATimestamp();
             timeGot = true;
         }
-        ClawRollers.roll(0, 0.7);
+        ClawRollers.roll(0.7, 0);
         if ((Timer.getFPGATimestamp() - startTime) > time) {
             timeGot = false;
             ClawRollers.roll(0, 0);
