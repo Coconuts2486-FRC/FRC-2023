@@ -14,7 +14,7 @@ public class ConeBalanceCube {
 
     public static void placeConeMidPickupCube(int positive) {
         if (action == 0) {
-            if (GeneralAutoTimedActions.armUpToggle(1.5)) {
+            if (GeneralAutoTimedActions.armUpToggle(1.3)) {
                 action += 1;
             }
         } else if (action == 1) {
@@ -48,13 +48,14 @@ public class ConeBalanceCube {
             }
         } else if (action == 7) {
             Map.swerve.swerveDrive(0, 0, 0);
+            Rollers.roll(0, 0);
         }
 
     }
 
     public static void placeConeMidPickupCubeBalance(int positive) {
         if (action == 0) {
-            if (GeneralAutoTimedActions.armUpToggle(1.5)) {
+            if (GeneralAutoTimedActions.armUpToggle(1.3)) {
                 action += 1;
             }
         } else if (action == 1) {
@@ -102,15 +103,15 @@ public class ConeBalanceCube {
 
     public static void placeConeMidStraightBalance(int positive) {
         if (action == 0) {
-            if (GeneralAutoTimedActions.armUpToggle(1.5)) {
+            if (GeneralAutoTimedActions.armUpToggle(1.3)) {
                 action += 1;
             }
         } else if (action == 1) {
-            if (GeneralAutoTimedActions.armOutToggle(1)) {
+            if (GeneralAutoTimedActions.armOutToggle(0.6)) {
                 action += 1;
             }
         } else if (action == 2) {
-            if (GeneralAutoTimedActions.conePlaced(0.5)) {
+            if (GeneralAutoTimedActions.conePlaced(0.3)) {
                 action += 1;
             }
         } else if (action == 3) {
@@ -126,7 +127,7 @@ public class ConeBalanceCube {
                 action += 1;
             }
         }  else if (action == 6) {
-            if (DriveRoute.driveSpeed(StraightBalance.path, 3, 80, positive)) {
+            if (DriveRoute.driveSpeed(StraightBalance.path, 3, 65, positive)) {
                 action += 1;
             }
         } else if (action == 7) {
@@ -137,15 +138,15 @@ public class ConeBalanceCube {
 
     public static void placeConeMidStraightBalanceLeaveCommunity(int positive) {
         if (action == 0) {
-            if (GeneralAutoTimedActions.armUpToggle(1.5)) {
+            if (GeneralAutoTimedActions.armUpToggle(1.3)) {
                 action += 1;
             }
         } else if (action == 1) {
-            if (GeneralAutoTimedActions.armOutToggle(1)) {
+            if (GeneralAutoTimedActions.armOutToggle(0.6)) {
                 action += 1;
             }
         } else if (action == 2) {
-            if (GeneralAutoTimedActions.conePlaced(0.5)) {
+            if (GeneralAutoTimedActions.conePlaced(0.3)) {
                 action += 1;
             }
         } else if (action == 3) {
@@ -161,20 +162,21 @@ public class ConeBalanceCube {
                 action += 1;
             }
         }  else if (action == 6) {
-            Rollers.roll(0.2, 0);
-            if (DriveRoute.driveSpeed(StraightBalance.pathFar, 3, 60, positive)) {
+            Rollers.roll(0.8, 0);
+            if (DriveRoute.driveSpeed(StraightBalance.pathFar, 3, 85, positive)) {
                 action += 1;
                 Map.initialAngle = Map.gyro.getYaw();
                 Map.swerve.xPos = 0;
                 Map.swerve.yPos = 0;
                 DriveRoute.index = 0;
+                Rollers.roll(0, 0);
             }
         } else if (action == 7) {
             if (GeneralAutoTimedActions.intakeExtendToggle(0.3)) {
                 action += 1;
             }
         } else if (action == 8) {
-            if (DriveRoute.driveSpeed(StraightBalance.pathFarBack, 3, 60, positive)) {
+            if (DriveRoute.driveSpeed(StraightBalance.pathFarBack, 3, 75, positive)) {
                 action += 1;
             }
         } else if (action == 9) {
