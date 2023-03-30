@@ -52,8 +52,8 @@ public class Map {
      * (10) Right Stick     - Toggle pipeline/limelight light
      */
 
-    public static double deadband = 0.1;
-    public static double deadbandTwist = 0.1;
+    public static double deadband = 0.12;
+    public static double deadbandTwist = 0.12;
     public static double ticksToInches = 56.5;
     
     public static Joystick driver = new Joystick(0);

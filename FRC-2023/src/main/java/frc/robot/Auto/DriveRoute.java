@@ -34,14 +34,14 @@ public class DriveRoute {
 
         SmartDashboard.putNumber("Speed auto before", speedAuto);
 
-        if (DriveTo.goToCoordsSpeed(path[index][0], path[index][1] * positive, cutoff, speedAuto, path.length, speedVariable)) {
+        if (DriveTo.goToCoordsSpeed(path[index][0] * positive, path[index][1], cutoff, speedAuto, path.length, speedVariable)) {
             index = index + 1;
             if (index == path.length - 1) {
                 return true;
             }
         }
-        SmartDashboard.putNumber("target x", path[index][0]);
-        SmartDashboard.putNumber("target y", path[index][1] * positive);
+        SmartDashboard.putNumber("target x", path[index][0] * positive);
+        SmartDashboard.putNumber("target y", path[index][1]);
 
         return false;
     }

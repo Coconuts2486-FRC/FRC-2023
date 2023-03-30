@@ -6,6 +6,7 @@ import frc.robot.Auto.AutoActions.Balance;
 import frc.robot.Auto.AutoActions.GeneralAutoTimedActions;
 import frc.robot.Auto.Paths.DriveToBalance;
 import frc.robot.Auto.Paths.DriveToCube;
+import frc.robot.Auto.Paths.StraightBalance;
 import frc.robot.Intake.Rollers;
 
 public class ConeBalanceCube {
@@ -157,29 +158,24 @@ public class ConeBalanceCube {
             if (GeneralAutoTimedActions.armUpToggle(0.8)) {
                 action += 1;
             }
-        } else if (action == 5) {
-            if (GeneralAutoTimedActions.intakeExtendToggle(0.3)) {
-                action += 1;
-            }
-        }  else if (action == 6) {
-            Rollers.roll(0.8, 0);
-            if (DriveRoute.driveSpeed(StraightBalance.pathFar, 3, 85, positive)) {
+        }  else if (action == 5) {
+            if (DriveRoute.driveSpeed(StraightBalance.pathFar, 3, 75, positive)) {
                 action += 1;
                 Map.initialAngle = Map.gyro.getYaw();
                 Map.swerve.xPos = 0;
                 Map.swerve.yPos = 0;
                 DriveRoute.index = 0;
-                Rollers.roll(0, 0);
             }
-        } else if (action == 7) {
-            if (GeneralAutoTimedActions.intakeExtendToggle(0.3)) {
+        } else if (action == 6) {
+            Map.swerve.swerveDrive(0, 0, 0);
+            if (GeneralAutoTimedActions.waitTime(1)) {
                 action += 1;
             }
-        } else if (action == 8) {
+        } else if (action == 7) {
             if (DriveRoute.driveSpeed(StraightBalance.pathFarBack, 3, 75, positive)) {
                 action += 1;
             }
-        } else if (action == 9) {
+        } else if (action == 8) {
             Balance.balanceRobot();
         }
     }

@@ -12,12 +12,11 @@ public class Limelight {
     public static NetworkTableEntry ty = table.getEntry("ty");
     public static NetworkTableEntry ta = table.getEntry("ta");
 
-    public static PIDController vPid = new PIDController(0.0000001, 0, 0);
+    // change pid vlaues here
+    public static PIDController vPid = new PIDController(0.003, 0, 0);
    
     public static double xOffset;
     public static boolean pipelineOneOn = false; 
-   
-    // change pid vlaues here
 
     public static void pipelineZero() {
         NetworkTableEntry pipelineEntry = table.getEntry("pipeline");
@@ -38,19 +37,19 @@ public class Limelight {
 
     }
    
- public static void pipelineOne() {
-    NetworkTableEntry pipelineEntry = table.getEntry("pipeline");
-    pipelineEntry.setNumber(1);
+    public static void pipelineOne() {
+        NetworkTableEntry pipelineEntry = table.getEntry("pipeline");
+        pipelineEntry.setNumber(1);
 
     }
+
     public static double Target(boolean buttonPressed) {
         if (buttonPressed) {
             xOffset = tx.getDouble(0.0);
+            return (xOffset/60) + vPid.calculate(xOffset);
         } else {
-            xOffset = 0;
+            return 0;
         }
-        
-        return (xOffset/60)+vPid.calculate(xOffset);
 
     }
 }

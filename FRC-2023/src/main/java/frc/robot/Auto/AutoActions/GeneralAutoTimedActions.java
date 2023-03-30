@@ -90,4 +90,16 @@ public class GeneralAutoTimedActions {
         }
         return false;
     }
+
+    public static boolean waitTime(double time) {
+        if (!timeGot) {
+            startTime = Timer.getFPGATimestamp();
+            timeGot = true;
+        }
+        if ((Timer.getFPGATimestamp() - startTime) > time) {
+            timeGot = false;
+            return true;
+        }
+        return false;
+    }
 }
