@@ -52,7 +52,7 @@ public class Wheel {
         this.rotateMotor.setNeutralMode(NeutralMode.Brake);
 
         //initialize PIDs
-        this.anglePID = new PIDController(0.0067, 0.015, 0.0001);
+        this.anglePID = new PIDController(0.0039, 0.0084, 0.0);
         this.speedPID = new PIDController(0.0000075, 0.0001, 0.0);
 
         //set the rotation angle based on which wheel it is

@@ -15,7 +15,7 @@ public class Balance {
         roll[0] = Map.gyro.getRoll() / 45;
 
         balance_drive = Wheel.addVectors(pitch, roll);
-        balance_drive[0] = balance_drive[0] * 0.6;
+        balance_drive[0] = balance_drive[0] * 0.7;
         if (balance_drive[0] > 0.5) {
             balance_drive[0] = 0.5;
         }

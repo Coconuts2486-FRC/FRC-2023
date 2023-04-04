@@ -29,7 +29,7 @@ public class Swerve {
         this.wheelFR = new Wheel("FR", 140, ports[0]);
         this.wheelFL = new Wheel("FL", 176, ports[1]);
         this.wheelBL = new Wheel("BL", 287, ports[2]);
-        this.wheelBR = new Wheel("BR", 342, ports[3]);
+        this.wheelBR = new Wheel("BR", 337, ports[3]);
     }
 
     public void swerveDrive(double angle, double speed, double twist)

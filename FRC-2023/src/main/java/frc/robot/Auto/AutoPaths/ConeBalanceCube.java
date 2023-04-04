@@ -68,11 +68,11 @@ public class ConeBalanceCube {
                 action += 1;
             }
         } else if (action == 3) {
-            if (GeneralAutoTimedActions.armOutToggle(1)) {
+            if (GeneralAutoTimedActions.armOutToggle(0.7)) {
                 action += 1;
             }
         } else if (action == 4) {
-            if (GeneralAutoTimedActions.armUpToggle(1)) {
+            if (GeneralAutoTimedActions.armUpToggle(0.7)) {
                 action += 1;
             }
         } else if (action == 5) {
@@ -81,7 +81,7 @@ public class ConeBalanceCube {
             }
         }  else if (action == 6) {
             Rollers.roll(0.2, 0);
-            if (DriveRoute.driveSpeed(DriveToCube.path, 3, 80, positive)) {
+            if (DriveRoute.driveSpeed(DriveToCube.path, 3, 65, positive)) {
                 action += 1;
                 Map.initialAngle = Map.gyro.getYaw();
                 Map.swerve.xPos = 0;
@@ -155,11 +155,11 @@ public class ConeBalanceCube {
                 action += 1;
             }
         } else if (action == 4) {
-            if (GeneralAutoTimedActions.armUpToggle(0.8)) {
+            if (GeneralAutoTimedActions.armUpToggle(0.3)) {
                 action += 1;
             }
         }  else if (action == 5) {
-            if (DriveRoute.driveSpeed(StraightBalance.pathFar, 3, 75, positive)) {
+            if (DriveRoute.driveSpeed(StraightBalance.pathFar, 3, 85, positive)) {
                 action += 1;
                 Map.initialAngle = Map.gyro.getYaw();
                 Map.swerve.xPos = 0;
@@ -172,7 +172,7 @@ public class ConeBalanceCube {
                 action += 1;
             }
         } else if (action == 7) {
-            if (DriveRoute.driveSpeed(StraightBalance.pathFarBack, 3, 75, positive)) {
+            if (DriveRoute.driveSpeed(StraightBalance.pathFarBack, 3, 85, positive)) {
                 action += 1;
             }
         } else if (action == 8) {
