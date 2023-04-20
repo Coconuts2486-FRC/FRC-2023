@@ -21,7 +21,7 @@ public class Swerve {
     public double yPos;
     public double[] coords = {0, 0};
 
-    public static double straightAngle;
+    public double straightAngle;
 
     //offset, module numbers, id's for rotate and for drive, rotation, drive, and angle
     public Swerve()
@@ -51,8 +51,8 @@ public class Swerve {
                     twist = twist - Map.deadbandTwist;
                 }
             } else {
-                twist = 0;
-                // twist = (straightAngle - Map.gyro.getYaw()) / -120;
+                // twist = 0;
+                twist = (straightAngle - Map.gyro.getYaw()) / -150;
             }
 
             SmartDashboard.putNumber("Speed in swerve", speed);

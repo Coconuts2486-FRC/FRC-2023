@@ -10,6 +10,7 @@ import frc.robot.Auto.DriveRoute;
 import frc.robot.Auto.AutoActions.Auto;
 import frc.robot.Auto.AutoActions.Balance;
 import frc.robot.Auto.AutoPaths.ConeBalanceCube;
+import frc.robot.Drive.Swerve;
 import frc.robot.Intake.ClawRollers;
 import frc.robot.Intake.PneumaticArm;
 import frc.robot.Intake.Rollers;
@@ -40,6 +41,7 @@ public class Robot extends TimedRobot {
     @Override
     public void robotInit() {
         Map.initialAngle = Map.gyro.getYaw();
+        Map.swerve.straightAngle = Map.gyro.getYaw();
         Rollers.initialize();
         ClawRollers.initialize();
         CameraServer.startAutomaticCapture();
@@ -54,6 +56,7 @@ public class Robot extends TimedRobot {
     @Override
     public void autonomousInit() {
         Map.elapsedTime = 0;
+        Map.swerve.straightAngle = Map.gyro.getYaw();
         ConeBalanceCube.action = 0;
     }
 
@@ -65,6 +68,7 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopInit() {
         Map.elapsedTime = 0;
+        Map.swerve.straightAngle = Map.gyro.getYaw();
         PneumaticArm.init();
     }
 
@@ -72,6 +76,7 @@ public class Robot extends TimedRobot {
     public void teleopPeriodic() {
 
         // get joystick stuff
+        // x = Map.driver.getRawAxis(4);
         x = Map.driver.getRawAxis(4);
         y = Map.driver.getRawAxis(5);
         // twist to limelight targets with driver B
