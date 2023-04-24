@@ -52,7 +52,7 @@ public class Swerve {
                 }
             } else {
                 // twist = 0;
-                twist = (straightAngle - Map.gyro.getYaw()) / -200;
+                twist = (straightAngle - Map.gyro.getYaw()) / -360;
             }
 
             SmartDashboard.putNumber("Speed in swerve", speed);

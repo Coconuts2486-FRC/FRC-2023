@@ -128,7 +128,7 @@ public class ConeBalanceCube {
                 action += 1;
             }
         }  else if (action == 6) {
-            if (DriveRoute.driveSpeed(StraightBalance.path, 3, 55, positive)) {
+            if (DriveRoute.driveSpeed(StraightBalance.path, 3, 65, positive)) {
                 action += 1;
             }
         } else if (action == 7) {
