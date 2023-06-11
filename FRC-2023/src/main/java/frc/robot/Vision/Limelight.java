@@ -7,7 +7,14 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 
 public class Limelight {
+
+
+
     public static NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
+    
+    public static NetworkTableEntry botpose = table.getEntry("botpose");
+    
+    
     public static NetworkTableEntry tx = table.getEntry("tx");
     public static NetworkTableEntry ty = table.getEntry("ty");
     public static NetworkTableEntry ta = table.getEntry("ta");
@@ -27,9 +34,11 @@ public class Limelight {
 
     public static void track () {
         //read values periodically
+        // double[] pos = botpose.getDoubleArray(new double[6]);
         double x = tx.getDouble(0.0);
         double y = ty.getDouble(0.0);
         double area = ta.getDouble(0.0);
+
 
         //post to smart dashboard periodically
         SmartDashboard.putNumber("LimelightX", x);
@@ -43,6 +52,7 @@ public class Limelight {
     pipelineEntry.setNumber(1);
 
     }
+
     public static double Target(boolean buttonPressed) {
         if (buttonPressed) {
             xOffset = tx.getDouble(0.0);

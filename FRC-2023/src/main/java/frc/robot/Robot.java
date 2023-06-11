@@ -75,7 +75,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopPeriodic() {
-
+        Limelight.track();
         // get joystick stuff
         x = Map.driver.getRawAxis(4) * 0.6;
         y = Map.driver.getRawAxis(5) * 0.6;
