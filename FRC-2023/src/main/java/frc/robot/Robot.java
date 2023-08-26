@@ -92,10 +92,13 @@ public class Robot extends TimedRobot {
         
         if (Map.driver.getRawButton(5)) {
             Balance.balanceRobot();
-        } else {
+        } else if (Map.driver.getRawButton(4)){
+            Map.swerve.swerveDrive( -90 + fieldCenOffset, joystickMag, 0);
+        } else{
             Map.swerve.swerveDrive(joystickAngle + fieldCenOffset, joystickMag, twist);
             Map.swerve.odometry(fieldCenOffset);
         }
+
 
         // zero robot angle and position with driver Y
         if (Map.driver.getRawButton(3)) {

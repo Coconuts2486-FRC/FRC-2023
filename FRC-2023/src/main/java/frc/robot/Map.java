@@ -31,7 +31,7 @@ public class Map {
      * (4) Y                - Outtake
      * (5) L Bumper         - Balances robot
      * (6) R Bumper         - Toggle intake out and spin rollers
-     * (7) Share            - 
+     * (7) Share ,,.           - 
      * (8) Menu             -
      * (9) Left Stick       -
      * (10) Right Stick     -
