@@ -1,5 +1,7 @@
 package frc.robot.Auto;
 
+import frc.robot.Auto.AutoActions.Balance;
+
 public class ShortTestPaths {
 
     public static boolean onBoard = false;
