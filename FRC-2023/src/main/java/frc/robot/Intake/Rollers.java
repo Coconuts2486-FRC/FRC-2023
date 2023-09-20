@@ -12,7 +12,7 @@ public class Rollers {
         intakeMotor1.setInverted(true);
     }
     
-    public static void roll(double in, double out) {
+    public static void roll(double out, double in) {
         intakeMotor1.set(VictorSPXControlMode.PercentOutput, (in - out));
         intakeMotor2.set(VictorSPXControlMode.PercentOutput, -(in - out));
     }

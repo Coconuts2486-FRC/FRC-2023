@@ -21,15 +21,15 @@ public class Swerve {
     public double yPos;
     public double[] coords = {0, 0};
 
-    public static double straightAngle;
+    public double straightAngle;
 
     //offset, module numbers, id's for rotate and for drive, rotation, drive, and angle
     public Swerve()
     {
         this.wheelFR = new Wheel("FR", 140, ports[0]);
-        this.wheelFL = new Wheel("FL", 174, ports[1]);
+        this.wheelFL = new Wheel("FL", 176, ports[1]);
         this.wheelBL = new Wheel("BL", 287, ports[2]);
-        this.wheelBR = new Wheel("BR", 342, ports[3]);
+        this.wheelBR = new Wheel("BR", 337, ports[3]);
     }
 
     public void swerveDrive(double angle, double speed, double twist)
@@ -51,8 +51,8 @@ public class Swerve {
                     twist = twist - Map.deadbandTwist;
                 }
             } else {
-                twist = 0;
-                // twist = (straightAngle - Map.gyro.getYaw()) / -120;
+                // twist = 0;
+                twist = (straightAngle - Map.gyro.getYaw()) / -360;
             }
 
             SmartDashboard.putNumber("Speed in swerve", speed);

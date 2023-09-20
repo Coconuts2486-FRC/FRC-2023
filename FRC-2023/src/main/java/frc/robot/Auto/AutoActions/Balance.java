@@ -1,4 +1,4 @@
-package frc.robot.Auto;
+package frc.robot.Auto.AutoActions;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Map;
@@ -15,7 +15,7 @@ public class Balance {
         roll[0] = Map.gyro.getRoll() / 45;
 
         balance_drive = Wheel.addVectors(pitch, roll);
-        balance_drive[0] = balance_drive[0] * 0.9;
+        balance_drive[0] = balance_drive[0] * 0.7;
         if (balance_drive[0] > 0.5) {
             balance_drive[0] = 0.5;
         }

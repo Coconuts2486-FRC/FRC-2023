@@ -1,4 +1,4 @@
-package frc.robot.Auto;
+package frc.robot.Auto.AutoPaths;
 
 import edu.wpi.first.wpilibj.Timer;
 import frc.robot.Intake.Rollers;
