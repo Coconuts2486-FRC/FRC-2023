@@ -26,10 +26,10 @@ public class Swerve {
     //offset, module numbers, id's for rotate and for drive, rotation, drive, and angle
     public Swerve()
     {
-        this.wheelFR = new Wheel("FR", 140, ports[0]);
-        this.wheelFL = new Wheel("FL", 176, ports[1]);
-        this.wheelBL = new Wheel("BL", 287, ports[2]);
-        this.wheelBR = new Wheel("BR", 337, ports[3]);
+        this.wheelFR = new Wheel("FR", 143, ports[0]);
+        this.wheelFL = new Wheel("FL", 86, ports[1]);
+        this.wheelBL = new Wheel("BL", 197, ports[2]);
+        this.wheelBR = new Wheel("BR", 255, ports[3]);
     }
 
     public void swerveDrive(double angle, double speed, double twist)
