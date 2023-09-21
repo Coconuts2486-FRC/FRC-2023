@@ -86,7 +86,7 @@ public class Robot extends TimedRobot {
         joystickAngle = 180 + (Math.atan2(y, -x) / (Math.PI) * 180);
         joystickMag = Math.sqrt(x * x + y * y);
         fieldCenOffset = Map.initialAngle - Map.gyro.getYaw();
-
+        SmartDashboard.putNumber("Joystick Angle", joystickAngle);
         // balance with left bumber otherwise drive
         // if (Map.coDriver.getRawButton(1)) {
         //     DriveRoute.driveSpeed(SimpleZigZag.path1, 2, SimpleZigZag.path1Speed);
@@ -94,9 +94,19 @@ public class Robot extends TimedRobot {
         
         if (Map.driver.getRawButton(5)) {
             Balance.balanceRobot();
-        } else if (Map.driver.getRawButton(4)){
-            Map.swerve.swerveDrive( -90 + fieldCenOffset, joystickMag, 0);
-        } else{
+        }
+        // drive straight foreward or back button
+        else if (Map.driver.getRawButton(4)){
+            if (joystickAngle < 180){
+            Map.swerve.swerveDrive( 90 + fieldCenOffset, joystickMag, 0);
+            } else if (joystickAngle > 180){
+                Map.swerve.swerveDrive( -90 + fieldCenOffset, joystickMag, 0);
+            }
+        }
+        
+        
+        
+        else{
             Map.swerve.swerveDrive(joystickAngle + fieldCenOffset, joystickMag, twist);
             Map.swerve.odometry(fieldCenOffset);
         }
