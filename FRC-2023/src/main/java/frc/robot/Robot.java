@@ -87,6 +87,7 @@ public class Robot extends TimedRobot {
         joystickMag = Math.sqrt(x * x + y * y);
         fieldCenOffset = Map.initialAngle - Map.gyro.getYaw();
         SmartDashboard.putNumber("Joystick Angle", joystickAngle);
+        SmartDashboard.putNumber("Joystick Magnitude", joystickMag);
         // balance with left bumber otherwise drive
         // if (Map.coDriver.getRawButton(1)) {
         //     DriveRoute.driveSpeed(SimpleZigZag.path1, 2, SimpleZigZag.path1Speed);

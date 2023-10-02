@@ -52,8 +52,13 @@ public class Wheel {
         this.rotateMotor.setNeutralMode(NeutralMode.Brake);
 
         //initialize PIDs
-        this.anglePID = new PIDController(0.0039, 0.0084, 0.0);
+    
+        //This is what I started with:
+         this.anglePID = new PIDController(0.0039, 0.0084, 0.0);
+        //this.anglePID = new PIDController(0.0065, 0.000, 0.0002);
+        //this.anglePID = new PIDController(0.0065, 0.0001, 0);
         this.speedPID = new PIDController(0.0000075, 0.0001, 0.0);
+        // this.speedPID = new PIDController(0.0000075, 0.0001, 0.0);
 
         //set the rotation angle based on which wheel it is
         switch (this.id) {
@@ -218,3 +223,48 @@ public class Wheel {
         return magnitude * Math.sin(toRadians(angle));
     }
 }
+
+    // private double kp;
+    // private double ki;
+    // private double kd;
+    // private double setpoint;
+    
+    // private double prevError = 0;
+    // private double integral = 0;
+    
+    // // Anti-windup parameters
+    // private double integralLimit = 100; // Adjust as needed
+    // private double windupGuard = 20;   // Adjust as needed
+    
+    // public void PIDController(double kp, double ki, double kd, double setpoint) {
+    //     this.kp = kp;
+    //     this.ki = ki;
+    //     this.kd = kd;
+    //     this.setpoint = setpoint;
+    // }
+    
+    // public double compute(double current) {
+    //     double error = setpoint - current;
+        
+    //     // Proportional term
+    //     double pTerm = kp * error;
+        
+    //     // Integral term with anti-windup
+    //     integral += ki * error;
+    //     if (integral > integralLimit) {
+    //         integral = integralLimit;
+    //     } else if (integral < -integralLimit) {
+    //         integral = -integralLimit;
+    //     }
+        
+    //     // Derivative term
+    //     double dTerm = kd * (error - prevError);
+        
+    //     // PID control output
+    //     double controlOutput = pTerm + integral + dTerm;
+        
+    //     // Store current error for the next iteration
+    //     prevError = error;
+        
+    //     return controlOutput;
+    // }
