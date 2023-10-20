@@ -14,6 +14,7 @@ public class Auto {
         autoChooser.addOption("Score cone, drive straight, balance", 3);
         autoChooser.addOption("Score cone, leave community zone, pickup cube", 4);
         autoChooser.addOption("Score cone, drive straight, leave community, balance", 5);
+        autoChooser.addOption("drive Over Charge station, balance", 6);
         SmartDashboard.putData("Auto Modes", autoChooser);
     }
 
@@ -32,6 +33,8 @@ public class Auto {
             ConeBalanceCube.placeConeMidPickupCube(1);
         } else if (getSelectedAuto() == 5) {
             ConeBalanceCube.placeConeMidStraightBalanceLeaveCommunity(1);
+        } else if (getSelectedAuto() == 6) {
+            ConeBalanceCube.placeConeMidOverChargeStationPickupCubeBalance(1);
         }
     }
 }

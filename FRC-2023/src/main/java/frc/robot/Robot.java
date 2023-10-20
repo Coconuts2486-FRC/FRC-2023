@@ -6,6 +6,7 @@ package frc.robot;
 
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Auto.DriveRoute;
 import frc.robot.Auto.AutoActions.Auto;
@@ -35,12 +36,15 @@ public class Robot extends TimedRobot {
     double joystickAngle;
     double joystickMag;
     double fieldCenOffset;
+    double time = Timer.getFPGATimestamp();
+
 
     double[] balance_drive = {0, 0};
 
 
     @Override
     public void robotInit() {
+        SmartDashboard.putNumber("Timer", time);
         Map.initialAngle = Map.gyro.getYaw();
         Map.swerve.straightAngle = Map.gyro.getYaw();
         Rollers.initialize();

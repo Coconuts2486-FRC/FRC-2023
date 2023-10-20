@@ -4,6 +4,7 @@ import frc.robot.Map;
 import frc.robot.Auto.DriveRoute;
 import frc.robot.Auto.AutoActions.Balance;
 import frc.robot.Auto.AutoActions.GeneralAutoTimedActions;
+import frc.robot.Auto.Paths.DriveOverBalance;
 import frc.robot.Auto.Paths.DriveToBalance;
 import frc.robot.Auto.Paths.DriveToCube;
 import frc.robot.Auto.Paths.StraightBalance;
@@ -13,6 +14,44 @@ public class ConeBalanceCube {
     
     public static int action = 0;
 
+    public static void placeConeMidOverChargeStationPickupCubeBalance(int positive) {
+    
+        if (action == 0) {
+            if (GeneralAutoTimedActions.armUpToggle(1.3)) {
+                action += 1;
+            }
+        } else if (action == 1) {
+            if (GeneralAutoTimedActions.armOutToggle(0.6)) {
+                action += 1;
+            }
+        } else if (action == 2) {
+            if (GeneralAutoTimedActions.conePlaced(0.3)) {
+                action += 1;
+            }
+        } else if (action == 3) {
+            if (GeneralAutoTimedActions.armOutToggle(0.3)) {
+                action += 1;
+            }
+        } else if (action == 4) {
+            if (GeneralAutoTimedActions.armUpToggle(0.8)) {
+                action += 1;
+            }
+        } else if (action == 5) {
+            if (GeneralAutoTimedActions.intakeExtendToggle(0.3)) {
+                action += 1;
+            }
+        }  else if (action == 6) {
+            Rollers.roll(0.2, 0);
+            if (DriveRoute.driveSpeed(DriveOverBalance.pathB, 3, 65, positive)) {
+                action += 1;
+            }
+        } else if (action == 7) {
+            Rollers.roll(0,0);
+            Balance.balanceRobot();
+        }
+    
+    
+    }
     public static void placeConeMidPickupCube(int positive) {
         if (action == 0) {
             if (GeneralAutoTimedActions.armUpToggle(1.3)) {
