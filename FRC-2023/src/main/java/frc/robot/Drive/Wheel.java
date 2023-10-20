@@ -54,11 +54,17 @@ public class Wheel {
         //initialize PIDs
     
         //This is what I started with:
-         this.anglePID = new PIDController(0.0039, 0.0084, 0.0);
+        // this is the one we use
+        this.anglePID = new PIDController(0.0039, 0.0084, 0.0);
         //this.anglePID = new PIDController(0.0065, 0.000, 0.0002);
         //this.anglePID = new PIDController(0.0065, 0.0001, 0);
+     
         this.speedPID = new PIDController(0.0000075, 0.0001, 0.0);
-        // this.speedPID = new PIDController(0.0000075, 0.0001, 0.0);
+         
+        // Seperate PID for FR that was acting strange
+        /*if (this.id == "FR"){
+             this.anglePID = new PIDController(0.0039, 0.0084, 0.0);
+        }*/
 
         //set the rotation angle based on which wheel it is
         switch (this.id) {
